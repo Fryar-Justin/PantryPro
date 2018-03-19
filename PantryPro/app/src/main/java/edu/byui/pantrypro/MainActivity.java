@@ -2,7 +2,6 @@ package edu.byui.pantrypro;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     String items[] = new String [] {"Apple", "Orange", "Banana", "Grapes", "Pineapple", "Car", "Door", "Airplane", "Engine", "Transformers", "Sockit", "Justin", "Wheel", "Substance", "Timmy"};
-    private static final String TAG = "MainActivity: ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String food = String.valueOf(adapterView.getItemAtPosition(i));
-                        Toast.makeText(MainActivity.this, food, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, food, Toast.LENGTH_LONG).show();
                     }
                 }
         );

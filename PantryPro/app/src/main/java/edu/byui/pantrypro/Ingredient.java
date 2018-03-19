@@ -27,7 +27,7 @@ public class Ingredient extends AppCompatActivity {
     private String name;
     private String dept;
     private String measurement;
-    private int price;
+    private double price;
     private int qty;
 
     /*************************** Default Values **************************/
@@ -39,9 +39,9 @@ public class Ingredient extends AppCompatActivity {
      ***                                        Public                                         ***
      *********************************************************************************************/
 
-    /************* Constructors ************/
+    /*********************** Constructors ***********************/
     // default constructor
-    public Ingredient() {
+    public Ingredient() throws Exception {
         // everything to default
         setName       (DEFAULT_VALUE_STRING);
         setDept       (DEFAULT_VALUE_STRING);
@@ -53,8 +53,8 @@ public class Ingredient extends AppCompatActivity {
     public Ingredient(String name,
                       String dept,
                       String measurement,
-                      int price,
-                      int qty)
+                      double price,
+                      int qty) throws Exception
     {
         // set from parameters
         setName(name);
@@ -64,22 +64,22 @@ public class Ingredient extends AppCompatActivity {
         setQty(qty);
     }
     // non-default constructor
-    public Ingredient(String name, int qty) {
+    public Ingredient(String name, int qty) throws Exception {
         // set from parameters
         setName(name);
         setQty(qty);
+        setPrice(DEFAULT_VALUE_INT);
 
         // everything else to default
         setDept(DEFAULT_VALUE_STRING);
         setMeasurement(DEFAULT_VALUE_STRING);
-        setPrice(DEFAULT_VALUE_INT);
     }
 
     /************************ Getters ************************/
     public String getName()        { return this.name;        }
     public String getDept()        { return this.dept;        }
     public String getMeasurement() { return this.measurement; }
-    public int    getPrice()       { return this.price;       }
+    public double getPrice()       { return this.price;       }
     public int    getQty()         { return this.qty;         }
 
     /*********************************** Setters ************************************/
@@ -87,30 +87,20 @@ public class Ingredient extends AppCompatActivity {
     public void setDept(String dept)               { this.dept = dept;               }
     public void setMeasurement(String measurement) { this.measurement = measurement; }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) throws Exception {
         // check if the number being assigned is valid
         if (price < 0) {
-            // inform the user the number they entered is invalid
-            Toast.makeText(this.getApplicationContext(),
-                    "The price cannot be negative!",
-                    Toast.LENGTH_SHORT).show();
-            // log the error
-            Log.e(TAG, "User attempted to enter a negative price");
+            throw new Exception("Price cannot be negative");
         } else {
             // valid, assign it
             this.price = price;
         }
     }
 
-    public void setQty(int qty) {
+    public void setQty(int qty) throws Exception {
         // check if the number being assigned is valid
         if (qty < 0) {
-            // inform the user the number they entered is invalid
-            Toast.makeText(this.getApplicationContext(),
-                    "You cannot have a negative Qty!",
-                    Toast.LENGTH_SHORT).show();
-            // log the error
-            Log.e(TAG, "User attempted to enter a negative Qty");
+            throw new Exception("Qty cannot be negative");
         }
         else {
             // valid, assign it

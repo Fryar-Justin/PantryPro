@@ -16,21 +16,21 @@ import java.util.ArrayList;
  *      name:           Holds the name of the recipe
  *      directions:     Holds details about how to cook the meal
  *      notes:          Holds notes about the recipe
- *      ingredients:    Holds the ingredients needed to cook the recipe
+ *      ingredients:    Holds the ingredients needed to make the recipe
  *************************************************************************************************/
 
-public class Recipe extends AppCompatActivity {
+public class Recipe {
     /*********************************************************************************************
      ***                                        Private                                        ***
      *********************************************************************************************/
 
-    /*************** Data ***************/
+    /***************** Data *****************/
     private String name;
     private String directions;
     private String notes;
     private ArrayList<Ingredient> ingredients;
 
-    /*************************** Default Values **************************/
+    /************************* Default Values ************************/
     private final        String TAG                  = "Recipe Class:";
     private static final String DEFAULT_VALUE_STRING = "Default";
     private static final int    DEFAULT_VALUE_INT    = 0;
@@ -53,17 +53,23 @@ public class Recipe extends AppCompatActivity {
                   String notes,
                   ArrayList<Ingredient> ingredients)
     {
-        setIngredients(ingredients);
         setName       (name);
         setDirections (directions);
         setNotes      (notes);
-    }
-
-    // non-default constructor
-    public Recipe(String name, String directions, ArrayList<Ingredient> ingredients) {
         setIngredients(ingredients);
+    }
+    // non-default constructor
+    public Recipe(String name, String directions, String notes) {
+        setName       (name);
+        setDirections (directions);
+        setNotes      (notes);
+        setIngredients(new ArrayList<Ingredient>());
+    }
+    // non-default constructor
+    public Recipe(String name, String directions) {
         setName       (name       );
         setDirections (directions );
+        setIngredients(new ArrayList<Ingredient>());
     }
 
     /******************************* Getters ********************************/
@@ -78,15 +84,7 @@ public class Recipe extends AppCompatActivity {
 
     public void setName(String name) {
         // check if the string is empty
-        if (name == "") {
-            // inform the user of their error
-            Toast.makeText(this.getApplicationContext(),
-                    "The name of your recipe cannot be empty!",
-                    Toast.LENGTH_SHORT).show();
-            // log the error
-            Log.e(TAG, "User attempted to leave the name of the recipe blank");
-        }
-        else {
+        if (name != "") {
             this.name = name;
         }
     }
@@ -108,28 +106,22 @@ public class Recipe extends AppCompatActivity {
      * doesn't allow duplicate entries and will inform the user if that
      * occurs.
      *********************************************************************/
-    public void addIngredient(Ingredient newIngredient) {
+    public void addIngredient(Ingredient newIngredient) throws Exception {
         // first check if we have this item already on the list
-        boolean haveit = false;
+        boolean duplicate = false;
         for (int i = 0; i < ingredients.size(); i++) {
             if (ingredients.get(i).getName() == newIngredient.getName()) {
-                haveit = true;
+                duplicate = true;
                 break;
             }
         }
 
-        if (!haveit) {
+        if (!duplicate) {
             // if we didn't find a duplicate then add it
             ingredients.add(newIngredient);
         }
         else {
-            // inform the user of their error
-            Toast.makeText(this.getApplicationContext(),
-                    "You already have this item on your list!",
-                    Toast.LENGTH_SHORT).show();
-            // log the error
-            Log.e(TAG, "User attempted to enter the duplicate ingredient "
-                    + newIngredient.getName());
+            throw new Exception("Recipe already exists");
         }
 
     }
@@ -139,36 +131,19 @@ public class Recipe extends AppCompatActivity {
      *
      * Description: Removes the ingredient from the recipe
      *********************************************************************/
-    public void removeIngredient(Ingredient item) {
-        boolean haveit = false;
+    public void removeIngredient(Ingredient item) throws Exception {
         // check our list to see if it is in the list
+        boolean removedItems = false;
         for (int i = 0; i < ingredients.size(); i++) {
             if (ingredients.get(i).getName() == item.getName()) {
                 // remove from the list
                 ingredients.remove(i);
-                // inform the user
-                Toast.makeText(this.getApplicationContext(),
-                        "Added " + item.getName(),
-                        Toast.LENGTH_SHORT).show();
-
-                // log the removal
-                Log.i(TAG, "User removed the ingredient "
-                        + ingredients.get(i).getName()
-                        + " from the "
-                        + this.name
-                        + " recipe");
-                haveit = true;
+                removedItems = true;
             }
         }
 
-        if (!haveit) {
-            // if we didn't find it in the list, tell the user
-            Toast.makeText(this.getApplicationContext(),
-                    item.getName() + " doesn't exist",
-                    Toast.LENGTH_SHORT).show();
-
-            // log the error
-            Log.e(TAG, "User attempted to remove an ingredient that did not exist");
+        if (!removedItems) {
+            throw new Exception("Didn't find Ingredient");
         }
     }
 

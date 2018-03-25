@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class InventoryActivity extends AppCompatActivity {
 
     ListView shoppingList;
     MyDBHandler dbHandler;
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String food = String.valueOf(adapterView.getItemAtPosition(i));
-                        Toast.makeText(MainActivity.this, food, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InventoryActivity.this, food, Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addButtonClicked(View view){
-        shareButtonIntent = new Intent(MainActivity.this, addInventoryItem.class);
+        shareButtonIntent = new Intent(InventoryActivity.this, addInventoryItem.class);
         startActivity(shareButtonIntent);
     }
 

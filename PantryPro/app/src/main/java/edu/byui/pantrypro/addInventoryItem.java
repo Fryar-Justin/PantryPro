@@ -5,11 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
-
-import java.util.ArrayList;
 
 public class addInventoryItem extends AppCompatActivity{
     EditText inputText;
@@ -19,7 +15,7 @@ public class addInventoryItem extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_inventory_item);
+        setContentView(R.layout.activity_add_inventory_item);
         dbHandler = new MyDBHandler(this, null, null, 1);
         inputText = (EditText) findViewById(R.id.itemInput);
     }
@@ -28,7 +24,7 @@ public class addInventoryItem extends AppCompatActivity{
     public void addItemClicked(View view){
         Item item = new Item(inputText.getText().toString());
         dbHandler.addItem(item);
-        shareButtonIntent = new Intent(addInventoryItem.this, MainActivity.class);
+        shareButtonIntent = new Intent(addInventoryItem.this, InventoryActivity.class);
         startActivity(shareButtonIntent);
     }
 /*

@@ -1,9 +1,5 @@
 package edu.byui.pantrypro;
 
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
 /*************************************************************************************************

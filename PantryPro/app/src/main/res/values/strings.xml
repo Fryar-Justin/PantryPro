@@ -12,6 +12,9 @@
     <string name="detail">Detail ></string>
     <string name="SampleText">Sample Text</string>
 
+    <!--Button labels-->
+    <string name="backButton">Back</string>
+
     <!-- Bottom row navigation buttons -->
     <string name="lists">Lists</string>
     <string name="recipes">Recipes</string>

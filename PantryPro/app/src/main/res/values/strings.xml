@@ -11,6 +11,11 @@
     <!-- List of items in list -->
     <string name="detail">Detail ></string>
     <string name="SampleText">Sample Text</string>
+    <string name="name">Name:</string>
+    <string name="quantity">Quantity:</string>
+    <string name="cost">Cost:</string>
+    <string name="expiration_date">Expiration Date:</string>
+    <string name="tags">Tags:</string>
 
     <!--Button labels-->
     <string name="backButton">Back</string>

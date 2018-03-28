@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -48,4 +49,11 @@ public class InventoryActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, stringList );
         shoppingList.setAdapter(arrayAdapter);
     }
+
+    public void mealClicked(View view){
+        shareButtonIntent = new Intent(InventoryActivity.this, MealPlan.class);
+        startActivity(shareButtonIntent);
+    }
 }
+
+

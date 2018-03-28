@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ItemDetailsActivity">
+        <activity android:name="InventoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,6 +19,10 @@
         <activity android:name=".TestActivity" />
         <activity android:name=".addInventoryItem" />
         <activity android:name=".TagsActivity" />
+        <activity android:name=".ItemDetailsActivity" />
+        <activity android:name=".MealPlan" />
+
+
         <!--<activity android:name=".ItemDetailsActivity"></activity>-->
     </application>
 

@@ -12,11 +12,17 @@ import java.util.ArrayList;
 public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
     private static MyDBHandler mydb;
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "items.db";
     public static final String TABLE_ITEMS = "items";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_ITEMNAME = "itemname";
+
+    public static final String TABLE_RECIPES = "recipe";
+    public static final String COLUMN_RECIPENAME = "recipename";
+    public static final String COLUMN_DIRECTIONS = "directions";
+    public static final String COLUMN_NOTES = "notes";
+    public static final String COLUMN_INGREDIENTS = "ingredients";
 
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -24,15 +30,17 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = "CREATE TABLE " + TABLE_ITEMS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_ITEMNAME + " TEXT" + ");";
-
+        String query = "CREATE TABLE " + TABLE_ITEMS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_ITEMNAME + " TEXT NOT NULL" + ");";
+        String query2 = "CREATE TABLE " + TABLE_RECIPES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_RECIPENAME + " TEXT NOT NULL, " + COLUMN_DIRECTIONS + " TEXT, " + COLUMN_NOTES + " TEXT, " + COLUMN_INGREDIENTS + " TEXT" + ");";
         //execute the query
         db.execSQL(query);
+        db.execSQL(query2);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion1) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
         onCreate(db);
     }
 

@@ -7,85 +7,34 @@
     tools:context="edu.byui.pantrypro.ItemDetailsActivity"
     tools:layout_editor_absoluteY="81dp">
 
+    <include
+        android:id="@+id/navigation_Top"
+        layout="@layout/navigation_top"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/navigation_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ListView
         android:id="@+id/datetext"
         android:layout_width="0dp"
         android:layout_height="407dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <Button
-        android:id="@+id/button_Back"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="140dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_weight="1"
-        android:text="@string/backButton"
-        android:textAlignment="viewStart"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="82dp"
-        android:layout_height="27dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        android:text="@string/inventory_label"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/button_Save"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/save"
-            android:textAlignment="textEnd"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="14sp"
-            tools:layout_editor_absoluteX="85dp"
-            tools:layout_editor_absoluteY="227dp" />
-
-        <Button
-            android:id="@+id/button_Delete"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/delete"
-            android:textAlignment="textStart"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="14sp"
-            tools:layout_editor_absoluteX="202dp"
-            tools:layout_editor_absoluteY="236dp" />
-    </LinearLayout>
+        tools:layout_editor_absoluteY="45dp" />
 
     <include
         android:id="@+id/include"

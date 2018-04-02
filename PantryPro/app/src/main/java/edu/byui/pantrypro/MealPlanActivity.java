@@ -17,7 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class MealPlan extends AppCompatActivity{
+public class MealPlanActivity extends AppCompatActivity{
     ListView inputDate;
     MyDBHandler dbHandler;
     Intent shareButtonIntent;

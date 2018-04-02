@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
  *
  * Variable Description:
  *      name:        Holds the name of the ingredient (banana, apple, peach, etc.)
- *      dept:        Holds the name of the department (backery, dairy, canned goods, etc.)
  *      measurement: Holds the metric (cups, gallons, lbs, etc.)
  *      price:       Holds the price of the product ($5.00, $10.00, $15.00)
  *      qty:         Holds the number of items of that type (1, 2, 3, 4, etc.)
@@ -23,7 +22,6 @@ public class Ingredient extends AppCompatActivity {
 
     /********** Data *********/
     private String name;
-    private String dept;
     private String measurement;
     private double price;
     private int qty;
@@ -42,21 +40,18 @@ public class Ingredient extends AppCompatActivity {
     public Ingredient() throws Exception {
         // everything to default
         setName       (DEFAULT_VALUE_STRING);
-        setDept       (DEFAULT_VALUE_STRING);
         setMeasurement(DEFAULT_VALUE_STRING);
         setPrice      (DEFAULT_VALUE_INT);
         setQty        (DEFAULT_VALUE_INT);
     }
     // non-default constructor
     public Ingredient(String name,
-                      String dept,
                       String measurement,
                       double price,
                       int qty) throws Exception
     {
         // set from parameters
         setName(name);
-        setDept(dept);
         setPrice(price);
         setMeasurement(measurement);
         setQty(qty);
@@ -69,20 +64,17 @@ public class Ingredient extends AppCompatActivity {
         setPrice(DEFAULT_VALUE_INT);
 
         // everything else to default
-        setDept(DEFAULT_VALUE_STRING);
         setMeasurement(DEFAULT_VALUE_STRING);
     }
 
     /************************ Getters ************************/
     public String getName()        { return this.name;        }
-    public String getDept()        { return this.dept;        }
     public String getMeasurement() { return this.measurement; }
     public double getPrice()       { return this.price;       }
     public int    getQty()         { return this.qty;         }
 
     /*********************************** Setters ************************************/
     public void setName(String name)               { this.name = name;               }
-    public void setDept(String dept)               { this.dept = dept;               }
     public void setMeasurement(String measurement) { this.measurement = measurement; }
 
     public void setPrice(double price) throws Exception {

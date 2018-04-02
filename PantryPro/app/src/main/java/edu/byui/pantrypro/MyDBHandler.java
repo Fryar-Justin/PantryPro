@@ -38,7 +38,7 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion1) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
         onCreate(db);
@@ -58,6 +58,41 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         db.insert(TABLE_ITEMS, null, values);
         db.close();
     }
+
+    // delete product from the database
+    public void deleteItem(String itemName) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_ITEMS + " WHERE " + COLUMN_ITEMNAME + "=\"" + itemName + "\";");
+    }
+
+    // turn data into a string to be displayed
+    public String databaseToString() {
+        String dbString = "";
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_ITEMS + " WHERE 1";
+
+        // cursor point to a location in your results
+        Cursor c = db.rawQuery(query, null);
+        // move to the first row in your results
+        c.moveToFirst();
+
+        int counter = 0;
+        while (!c.isAfterLast()) {
+            if (c.getString(c.getColumnIndex(COLUMN_ITEMNAME)) != null) {
+                dbString += c.getString(c.getColumnIndex(COLUMN_ITEMNAME));
+                dbString += "\n";
+            }
+            if (counter == 5) {
+                break;
+            }
+            counter++;
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+        return dbString;
+    }
+
     /*
         //Delete from database
         public void deleteProduct(String productName){

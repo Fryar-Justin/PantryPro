@@ -76,16 +76,11 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         // move to the first row in your results
         c.moveToFirst();
 
-        int counter = 0;
         while (!c.isAfterLast()) {
             if (c.getString(c.getColumnIndex(COLUMN_ITEMNAME)) != null) {
                 dbString += c.getString(c.getColumnIndex(COLUMN_ITEMNAME));
                 dbString += "\n";
             }
-            if (counter == 5) {
-                break;
-            }
-            counter++;
             c.moveToNext();
         }
         c.close();

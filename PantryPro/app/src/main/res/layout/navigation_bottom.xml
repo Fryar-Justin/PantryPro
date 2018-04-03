@@ -16,36 +16,40 @@
     app:layout_constraintStart_toStartOf="parent">
 
     <Button
-        android:id="@+id/Button_Lists"
+        android:id="@+id/button_Inventory"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/lists"
+        android:text="@string/inventory_label"
+        android:textSize="12sp"
         tools:showIn="@layout/navigation_bottom" />
 
     <Button
-        android:id="@+id/Button_Recipes"
+        android:id="@+id/button_Recipes"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/recipes" />
+        android:text="@string/recipes"
+        android:textSize="12sp" />
 
     <Button
-        android:id="@+id/Button_MealPlan"
+        android:id="@+id/button_MealPlan"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/meal_Plan" />
+        android:text="@string/meal_Plan"
+        android:textSize="12sp" />
 
     <Button
-        android:id="@+id/Button_Grocery"
+        android:id="@+id/button_Grocery"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/grocery" />
+        android:text="@string/grocery"
+        android:textSize="12sp" />
 
 </LinearLayout>

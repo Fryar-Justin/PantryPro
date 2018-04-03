@@ -26,11 +26,6 @@ public class Recipe {
     private String notes;
     private ArrayList<Ingredient> ingredients;
 
-    /************************* Default Values ************************/
-    private final        String TAG                  = "Recipe Class:";
-    private static final String DEFAULT_VALUE_STRING = "Default";
-    private static final int    DEFAULT_VALUE_INT    = 0;
-
     /*********************************************************************************************
      ***                                        Public                                         ***
      *********************************************************************************************/
@@ -39,9 +34,10 @@ public class Recipe {
     // default constructor
     public Recipe() {
         setIngredients(new ArrayList<Ingredient>());
-        setName       (DEFAULT_VALUE_STRING       );
-        setDirections (DEFAULT_VALUE_STRING       );
-        setNotes      (DEFAULT_VALUE_STRING       );
+        setName       ("Default");
+        setDirections ("Default");
+        setNotes      ("Default");
+        ingredients = new ArrayList<Ingredient>();
     }
     // non-default constructor
     public Recipe(String name,
@@ -102,7 +98,7 @@ public class Recipe {
      * doesn't allow duplicate entries and will inform the user if that
      * occurs.
      *********************************************************************/
-    public void addIngredient(Ingredient newIngredient) throws Exception {
+    public void addIngredient(Ingredient newIngredient) {
         // first check if we have this item already on the list
         boolean duplicate = false;
         for (int i = 0; i < ingredients.size(); i++) {
@@ -116,9 +112,6 @@ public class Recipe {
             // if we didn't find a duplicate then add it
             ingredients.add(newIngredient);
         }
-        else {
-            throw new Exception("Recipe already exists");
-        }
 
     }
 
@@ -127,7 +120,7 @@ public class Recipe {
      *
      * Description: Removes the ingredient from the recipe
      *********************************************************************/
-    public void removeIngredient(Ingredient item) throws Exception {
+    public void removeIngredient(Ingredient item) {
         // check our list to see if it is in the list
         boolean removedItems = false;
         for (int i = 0; i < ingredients.size(); i++) {
@@ -136,10 +129,6 @@ public class Recipe {
                 ingredients.remove(i);
                 removedItems = true;
             }
-        }
-
-        if (!removedItems) {
-            throw new Exception("Didn't find Ingredient");
         }
     }
 

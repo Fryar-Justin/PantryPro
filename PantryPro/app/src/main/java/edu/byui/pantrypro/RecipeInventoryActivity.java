@@ -10,30 +10,32 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GroceryListActivity extends AppCompatActivity {
+public class RecipeInventoryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grocery_list);
+        setContentView(R.layout.activity_recipe_inventory);
 
-        // set up the listeners and labels
+        // set the listeners and labels
         setRecipiesAndLabels();
+
+        // TODO: need to print the recipes from the database here
     }
 
     private void setRecipiesAndLabels() {
         // set the label
         TextView activityLabel = findViewById(R.id.textView_MenuLabel);
-        activityLabel.setText(R.string.groceryList);
+        activityLabel.setText(R.string.recipes);
 
         // set the onclick event for list items
-        ListView shoppingList = findViewById(R.id.listView_GroceryList);
+        ListView shoppingList = findViewById(R.id.listView_Recipes);
         shoppingList.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String food = String.valueOf(adapterView.getItemAtPosition(i));
-                        Toast.makeText(GroceryListActivity.this, food, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RecipeInventoryActivity.this, food, Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -43,7 +45,7 @@ public class GroceryListActivity extends AppCompatActivity {
         addButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Intent addInventory = new Intent(GroceryListActivity.this, AddRecipeActivity.class);
+                        Intent addInventory = new Intent(RecipeInventoryActivity.this, AddRecipeActivity.class);
                         startActivity(addInventory);
                     }
                 }
@@ -65,7 +67,7 @@ public class GroceryListActivity extends AppCompatActivity {
         listsButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Intent inventoryActivity = new Intent(GroceryListActivity.this, InventoryActivity.class);
+                        Intent inventoryActivity = new Intent(RecipeInventoryActivity.this, InventoryActivity.class);
                         startActivity(inventoryActivity);
                     }
                 }
@@ -76,8 +78,7 @@ public class GroceryListActivity extends AppCompatActivity {
         recipesButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Intent recipeInventory = new Intent(GroceryListActivity.this, RecipeInventoryActivity.class);
-                        startActivity(recipeInventory);
+                        // do nothing because we are already on this screen
                     }
                 }
         );
@@ -87,7 +88,7 @@ public class GroceryListActivity extends AppCompatActivity {
         mealPlan.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Intent recipeInventory = new Intent(GroceryListActivity.this, MealPlanActivity.class);
+                        Intent recipeInventory = new Intent(RecipeInventoryActivity.this, MealPlanActivity.class);
                         startActivity(recipeInventory);
                     }
                 }
@@ -98,7 +99,8 @@ public class GroceryListActivity extends AppCompatActivity {
         groceryList.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        // do nothing because we are already on this screen
+                        Intent recipeInventory = new Intent(RecipeInventoryActivity.this, GroceryListActivity.class);
+                        startActivity(recipeInventory);
                     }
                 }
         );

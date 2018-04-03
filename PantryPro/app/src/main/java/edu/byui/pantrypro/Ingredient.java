@@ -23,13 +23,7 @@ public class Ingredient extends AppCompatActivity {
     /********** Data *********/
     private String name;
     private String measurement;
-    private double price;
     private int    qty;
-
-    /*************************** Default Values **************************/
-    private final        String TAG                  = "Ingredient Class:";
-    private static final String DEFAULT_VALUE_STRING = "Default";
-    private static final int    DEFAULT_VALUE_INT    = 0;
 
     /*********************************************************************************************
      ***                                        Public                                         ***
@@ -37,60 +31,46 @@ public class Ingredient extends AppCompatActivity {
 
     /*********************** Constructors ***********************/
     // default constructor
-    public Ingredient() throws Exception {
+    public Ingredient() {
         // everything to default
-        setName       (DEFAULT_VALUE_STRING);
-        setMeasurement(DEFAULT_VALUE_STRING);
-        setPrice      (DEFAULT_VALUE_INT);
-        setQty        (DEFAULT_VALUE_INT);
+        setName       ("Default");
+        setMeasurement("Default");
+        setQty        (0);
     }
     // non-default constructor
     public Ingredient(String name,
                       String measurement,
                       double price,
-                      int qty) throws Exception
+                      int qty)
     {
         // set from parameters
         setName(name);
-        setPrice(price);
         setMeasurement(measurement);
         setQty(qty);
     }
     // non-default constructor
-    public Ingredient(String name, int qty) throws Exception {
+    public Ingredient(String name, int qty) {
         // set from parameters
         setName(name);
         setQty(qty);
-        setPrice(DEFAULT_VALUE_INT);
 
         // everything else to default
-        setMeasurement(DEFAULT_VALUE_STRING);
+        setMeasurement("Default");
     }
 
     /************************ Getters ************************/
     public String getName()        { return this.name;        }
     public String getMeasurement() { return this.measurement; }
-    public double getPrice()       { return this.price;       }
     public int    getQty()         { return this.qty;         }
 
     /*********************************** Setters ************************************/
     public void setName(String name)               { this.name = name;               }
     public void setMeasurement(String measurement) { this.measurement = measurement; }
 
-    public void setPrice(double price) throws Exception {
-        // check if the number being assigned is valid
-        if (price < 0) {
-            throw new Exception("Price cannot be negative");
-        } else {
-            // valid, assign it
-            this.price = price;
-        }
-    }
-
-    public void setQty(int qty) throws Exception {
+    public void setQty(int qty) {
         // check if the number being assigned is valid
         if (qty < 0) {
-            throw new Exception("Qty cannot be negative");
+            this.qty = 0;
         }
         else {
             // valid, assign it

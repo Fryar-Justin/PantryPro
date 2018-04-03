@@ -24,7 +24,7 @@ public class Ingredient extends AppCompatActivity {
     private String name;
     private String measurement;
     private double price;
-    private int qty;
+    private int    qty;
 
     /*************************** Default Values **************************/
     private final        String TAG                  = "Ingredient Class:";

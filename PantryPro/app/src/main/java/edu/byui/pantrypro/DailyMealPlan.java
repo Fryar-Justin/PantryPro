@@ -1,9 +1,7 @@
 package edu.byui.pantrypro;
 
-import java.util.ArrayList;
-
 /*************************************************************************************************
- * Class: Recipe
+ * Class: DailyMealPlan
  *
  * Created by Justin on 3/18/18.
  * Holds a meal plan for a single day
@@ -15,7 +13,7 @@ import java.util.ArrayList;
  *      dinner:    Holds the evening recipe
  *************************************************************************************************/
 
-public class MealPlan {
+public class DailyMealPlan {
     /*********************************************************************************************
      ***                                        Private                                        ***
      *********************************************************************************************/
@@ -31,13 +29,15 @@ public class MealPlan {
      *********************************************************************************************/
 
     /********************************* Constructors *********************************/
-    public MealPlan() {
+    public DailyMealPlan() {
+        day = "NONE";
         breakfast = new Recipe();
         lunch = new Recipe();
         dinner = new Recipe();
     }
 
-    public MealPlan(Recipe breakfast, Recipe lunch, Recipe dinner) {
+    public DailyMealPlan(String day, Recipe breakfast, Recipe lunch, Recipe dinner) {
+        this.day = day;
         this.breakfast = breakfast;
         this.lunch = lunch;
         this.dinner = dinner;
@@ -57,9 +57,9 @@ public class MealPlan {
 
     /******************************** Member Functions ****************************/
 
-    // equals(MealPlan mealplan) - checks to see if the meal day, breakfast, lunch and dinner plans names are the same
+    // equals(MealPlan mealplan) - checks to see if the meal day, breakfast, lunch and dinner plan names are the same
 
-    public boolean equals(MealPlan mealplan) {
+    public boolean equals(DailyMealPlan mealplan) {
         if (this.breakfast.getName().equals(mealplan.getBreakfast().getName())
                 && this.lunch.getName().equals(mealplan.getLunch().getName())
                 && this.dinner.getName().equals(mealplan.getDinner().getName())

@@ -39,4 +39,5 @@
     <string name="addingredient">Add Ingredient</string>
     <string name="deleteingredient">Delete Ingredient</string>
     <string name="measurement">Measurement:</string>
+    <string name="modify">Modify</string>
 </resources>

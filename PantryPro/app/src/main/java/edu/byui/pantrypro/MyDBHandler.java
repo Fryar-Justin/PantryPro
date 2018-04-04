@@ -63,9 +63,14 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     // TODO: Hanson - I Need you to add the required functionality to this, I don't know how exactly to make this work but I think I'm close. It will really depend on how you implement the database tables
     public void addRecipe(Recipe recipe) {
         ContentValues values = new ContentValues();
-        for (int i = 0; i < recipe.getIngredients().size(); i++) {
-            values.put(COLUMN_ITEMNAME, recipe.getIngredients().get(i).getName());
-        }
+
+
+
+        values.put(COLUMN_RECIPENAME, recipe.getName());
+        values.put(COLUMN_DIRECTIONS, recipe.getDirections());
+        values.put(COLUMN_NOTES, recipe.getNotes());
+        values.put(COLUMN_INGREDIENTS, recipe.getIngredients().toString());
+
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_RECIPES, null, values);
         db.close();

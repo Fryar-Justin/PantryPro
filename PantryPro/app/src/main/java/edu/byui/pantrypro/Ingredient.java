@@ -23,7 +23,6 @@ public class Ingredient extends AppCompatActivity {
     /********** Data *********/
     private String name;
     private String measurement;
-    private int    qty;
 
     /*********************************************************************************************
      ***                                        Public                                         ***
@@ -35,46 +34,35 @@ public class Ingredient extends AppCompatActivity {
         // everything to default
         setName       ("Default");
         setMeasurement("Default");
-        setQty        (0);
     }
     // non-default constructor
     public Ingredient(String name,
-                      String measurement,
-                      double price,
-                      int qty)
+                      String measurement)
     {
         // set from parameters
         setName(name);
         setMeasurement(measurement);
-        setQty(qty);
     }
     // non-default constructor
     public Ingredient(String name, int qty) {
         // set from parameters
         setName(name);
-        setQty(qty);
 
         // everything else to default
         setMeasurement("Default");
     }
 
+    // copy constructor
+    public Ingredient(Ingredient newIngredient) {
+        this.name = newIngredient.getName();
+        this.measurement = newIngredient.getMeasurement();
+    }
+
     /************************ Getters ************************/
     public String getName()        { return this.name;        }
     public String getMeasurement() { return this.measurement; }
-    public int    getQty()         { return this.qty;         }
 
     /*********************************** Setters ************************************/
     public void setName(String name)               { this.name = name;               }
     public void setMeasurement(String measurement) { this.measurement = measurement; }
-
-    public void setQty(int qty) {
-        // check if the number being assigned is valid
-        if (qty < 0) {
-            this.qty = 0;
-        }
-        else {
-            // valid, assign it
-            this.qty = qty;
-        }
-    }
 }

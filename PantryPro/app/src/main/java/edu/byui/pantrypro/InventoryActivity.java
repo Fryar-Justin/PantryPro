@@ -45,10 +45,10 @@ public class InventoryActivity extends AppCompatActivity {
         shoppingList.setAdapter(arrayAdapter);
     }
 
-    public void mealClicked(View view){
+    /*public void mealClicked(View view){
         shareButtonIntent = new Intent(InventoryActivity.this, MealPlanActivity.class);
         startActivity(shareButtonIntent);
-    }
+    }*/
 
     private void setListenersAndLabels() {
         // set the label
@@ -60,9 +60,12 @@ public class InventoryActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        String food = String.valueOf(adapterView.getItemAtPosition(i));
-//                        Toast.makeText(InventoryActivity.this, food, Toast.LENGTH_SHORT).show();
-
+                        String ingredientName = String.valueOf(adapterView.getItemAtPosition(i));
+                        Intent itemDetail = new Intent(InventoryActivity.this, IngredientDetailsActivity.class);
+                        itemDetail.putExtra("NAME", ingredientName);
+                        startActivity(itemDetail);
+                        //String quantity = dbHandler.getItemQuantity(ingredientName);
+                        //Toast.makeText(InventoryActivity.this, quantity, Toast.LENGTH_SHORT).show();
                     }
                 }
         );

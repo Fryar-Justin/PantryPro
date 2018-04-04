@@ -12,6 +12,12 @@ public class IngredientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ingredient);
 
         TextView activityLabel = findViewById(R.id.textView_MenuLabel);
+<<<<<<< Updated upstream
         activityLabel.setText(R.string.ingredient);
+=======
+        activityLabel.setText(R.string.ingredients);
+
+
+>>>>>>> Stashed changes
     }
 }

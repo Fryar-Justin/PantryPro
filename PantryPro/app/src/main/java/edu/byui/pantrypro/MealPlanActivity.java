@@ -49,9 +49,9 @@ public class MealPlanActivity extends AppCompatActivity{
         String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
         for(int i = 0; i < 7; i++){
             stringlist.add(days[i]);
-            stringlist.add("    Breakfast");
-            stringlist.add("    Lunch");
-            stringlist.add("    Dinner");
+            stringlist.add("    " + days[i] + " Breakfast");
+            stringlist.add("    " + days[i] + " Lunch");
+            stringlist.add("    " + days[i] + " Dinner");
         }
 
         return stringlist;

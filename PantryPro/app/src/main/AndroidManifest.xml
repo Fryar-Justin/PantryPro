@@ -17,8 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< Updated upstream
         <!-- <activity android:name=".TestActivity" /> -->
         <activity android:name=".InventoryActivity" />
+=======
+>>>>>>> Stashed changes
         <activity android:name=".addInventoryItem" />
         <activity android:name=".TagsActivity" />
         <activity android:name=".MealPlanActivity" />
@@ -30,6 +33,10 @@
         <activity android:name=".AssignRecipeActivity" />
         <activity android:name=".GroceryListActivity" />
         <activity android:name=".RecipeInventoryActivity" />
+<<<<<<< Updated upstream
+=======
+        <activity android:name=".UpdateInventoryActivity"></activity>
+>>>>>>> Stashed changes
     </application>
 
 </manifest>

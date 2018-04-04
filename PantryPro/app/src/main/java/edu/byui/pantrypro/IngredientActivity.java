@@ -12,6 +12,6 @@ public class IngredientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ingredient);
 
         TextView activityLabel = findViewById(R.id.textView_MenuLabel);
-        activityLabel.setText(R.string.ingredients);
+        activityLabel.setText(R.string.ingredient);
     }
 }

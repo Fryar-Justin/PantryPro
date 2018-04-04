@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddRecipeActivity"><!--<activity android:name=".InventoryActivity">-->
+        <activity android:name=".AddRecipeActivity">
+        <!--<activity android:name=".InventoryActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,6 +18,7 @@
             </intent-filter>
         </activity>
         <!-- <activity android:name=".TestActivity" /> -->
+        <activity android:name=".InventoryActivity" />
         <activity android:name=".addInventoryItem" />
         <activity android:name=".TagsActivity" />
         <activity android:name=".MealPlanActivity" />
@@ -27,7 +29,7 @@
         <activity android:name=".IngredientDetailsActivity" />
         <activity android:name=".AssignRecipeActivity" />
         <activity android:name=".GroceryListActivity" />
-        <activity android:name=".RecipeInventoryActivity"></activity>
+        <activity android:name=".RecipeInventoryActivity" />
     </application>
 
 </manifest>

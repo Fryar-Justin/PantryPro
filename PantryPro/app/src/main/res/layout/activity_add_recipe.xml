@@ -143,6 +143,7 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:onClick="deleteIngredient"
         android:text="@string/deleteingredient"
         app:layout_constraintBaseline_toBaselineOf="@+id/button_DeleteIngredient"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -153,6 +154,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:onClick="addIngredient"
         android:text="@string/addingredient"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
@@ -164,9 +166,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
+        android:onClick="saveToDatabase"
         android:text="@string/save"
         app:layout_constraintEnd_toStartOf="@+id/button_AddIngredient"
-        app:layout_constraintHorizontal_bias="0.625"
         app:layout_constraintStart_toEndOf="@+id/button_DeleteIngredient"
         app:layout_constraintTop_toTopOf="@+id/button_DeleteIngredient" />
 

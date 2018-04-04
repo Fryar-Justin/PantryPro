@@ -5,34 +5,55 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class AddRecipeActivity extends AppCompatActivity {
 
+    MyDBHandler dbHandler;
     Recipe newRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
+        newRecipe = new Recipe();
+        dbHandler = new MyDBHandler(this, null, null, 1);
 
         // set the buttons and labels
         setRecipiesAndLabels();
-
-        newRecipe = new Recipe();
     }
 
     // save the entire recipe to the database
-    private void saveToDatabase() {
-        // TODO: Fill in
+    public void saveToDatabase(View view) {
+        EditText inputText = findViewById(R.id.input_Ingredient);
+
+        Item item = new Item(inputText.getText().toString());
+        dbHandler.addItem(item);
+        Intent activity = new Intent(AddRecipeActivity.this, InventoryActivity.class);
+        startActivity(activity);
+
+        // TODO: Hanson - The below code is what I'd like to implement if the database can be setup to save an entire recipe. Would it be difficult to do?
+//        // new implementation
+//        EditText recipeName = findViewById(R.id.input_Name);
+//        EditText recipeDirections = findViewById(R.id.input_Directions);
+//        EditText recipeNotes = findViewById(R.id.input_Notes);
+//
+//        newRecipe.setName(recipeName.getText().toString());
+//        newRecipe.setDirections(recipeDirections.getText().toString());
+//        newRecipe.setNotes(recipeNotes.getText().toString());
+//
+//        dbHandler.addRecipe(newRecipe);
     }
 
     // add the ingredient to the recipe object
-    private void addIngredient() {
+    public void addIngredient(View view) {
         // find the input boxes
         EditText ingredientName = findViewById(R.id.input_Ingredient);
         EditText ingredientMeasurement = findViewById(R.id.input_Measurement);
@@ -45,17 +66,43 @@ public class AddRecipeActivity extends AppCompatActivity {
         newRecipe.addIngredient(new Ingredient(name, measurement));
 
         // update the listview for the ingredients
-        updateListView();
+        updateIngredientListView();
     }
 
     // delete the ingredient from the recipe object
-    private void deleteIngredient() {
-        // TODO: Fill in
+    public void deleteIngredient(View view) {
+        // find the input boxes
+        EditText ingredientName = findViewById(R.id.input_Ingredient);
+
+        // get the values
+        String name = ingredientName.getText().toString();
+
+        // assign it to the recipe
+        ArrayList<Ingredient> myIngredients = newRecipe.getIngredients();
+        for (int i = 0; i < myIngredients.size(); i++) {
+            if (name.equals(myIngredients.get(i).getName())) {
+                myIngredients.remove(i);
+            }
+        }
+
+        // update the ingredient list view
+        updateIngredientListView();
     }
 
     // updates the specified listview with the values
-    private void updateListView() {
-        // TODO: Fill in
+    private void updateIngredientListView() {
+        // get the list view that holds the ingredients list
+        ListView ingredientList = findViewById(R.id.listView_Ingredients);
+
+        // copy over all the names to a string array in preparation to be put on the list
+        ArrayList<String> ingredientNames = new ArrayList<String>();
+        for (int i = 0; i < newRecipe.getIngredients().size(); i++) {
+            ingredientNames.add(newRecipe.getIngredients().get(i).getName());
+        }
+
+        // update the list view with the ingredients
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ingredientNames);
+        ingredientList.setAdapter(arrayAdapter);
     }
 
     private void setRecipiesAndLabels() {

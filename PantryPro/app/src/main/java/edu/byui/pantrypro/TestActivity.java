@@ -47,4 +47,9 @@ public class TestActivity extends AppCompatActivity {
         text.setText(dbString);
         input.setText("");
     }
+
+    public void something() {
+        String food = "Do you see me?";
+        Toast.makeText(TestActivity.this, food, Toast.LENGTH_SHORT).show();
+    }
 }

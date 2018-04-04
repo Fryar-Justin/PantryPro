@@ -33,4 +33,9 @@
     <string name="quantity">Quantity:</string>
     <string name="assignRecipe">Assign Recipe Activity</string>
     <string name="groceryList">Grocery List</string>
+    <string name="directions">Directions:</string>
+    <string name="notes">Notes:</string>
+    <string name="listofingredients">List of Ingredients</string>
+    <string name="addingredient">Add Ingredient</string>
+    <string name="deleteingredient">Delete Ingredient</string>
 </resources>

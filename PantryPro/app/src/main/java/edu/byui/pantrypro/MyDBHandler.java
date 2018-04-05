@@ -51,7 +51,7 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         onCreate(db);
     }
 
-    //product is the class that will be stored
+   //product is the class that will be stored
     public void addItem(Item item){
         //sets different values for different columns and makes inserting easy
 
@@ -66,22 +66,6 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         db.close();
     }
 
-<<<<<<< Updated upstream
-    // adds a new recipe to the database
-    // TODO: Hanson - I Need you to add the required functionality to this, I don't know how exactly to make this work but I think I'm close. It will really depend on how you implement the database tables
-    public void addRecipe(Recipe recipe) {
-        ContentValues values = new ContentValues();
-
-
-
-        values.put(COLUMN_RECIPENAME, recipe.getName());
-        values.put(COLUMN_DIRECTIONS, recipe.getDirections());
-        values.put(COLUMN_NOTES, recipe.getNotes());
-        values.put(COLUMN_INGREDIENTS, recipe.getIngredients().toString());
-
-        SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_RECIPES, null, values);
-=======
     //product is the class that will be stored
     public void addIngredient(Ingredient ingredient){
         //sets different values for different columns and makes inserting easy
@@ -95,7 +79,6 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         //purely an insert statement rather than executing a query. 3 parameters
         //name of table, optional null?, list of values or contentvalues
         db.insert(TABLE_ITEMS, null, values);
->>>>>>> Stashed changes
         db.close();
     }
 

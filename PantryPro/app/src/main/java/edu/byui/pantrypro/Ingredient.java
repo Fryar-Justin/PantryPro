@@ -22,11 +22,7 @@ public class Ingredient extends AppCompatActivity {
 
     /********** Data *********/
     private String name;
-<<<<<<< Updated upstream
-    private String measurement;
-=======
     private String qty;
->>>>>>> Stashed changes
 
     /*********************************************************************************************
      ***                                        Public                                         ***
@@ -37,44 +33,20 @@ public class Ingredient extends AppCompatActivity {
     public Ingredient() {
         // everything to default
         setName       ("Default");
-<<<<<<< Updated upstream
-        setMeasurement("Default");
-    }
-    // non-default constructor
-    public Ingredient(String name,
-                      String measurement)
-    {
-        // set from parameters
-        setName(name);
-        setMeasurement(measurement);
-=======
         setQty        ("Default");
->>>>>>> Stashed changes
     }
 
     // non-default constructor
     public Ingredient(String name, String qty) {
         // set from parameters
         setName(name);
+        setQty(qty);
 
         // everything else to default
     }
 
-    // copy constructor
-    public Ingredient(Ingredient newIngredient) {
-        this.name = newIngredient.getName();
-        this.measurement = newIngredient.getMeasurement();
-    }
-
     /************************ Getters ************************/
     public String getName()        { return this.name;        }
-<<<<<<< Updated upstream
-    public String getMeasurement() { return this.measurement; }
-
-    /*********************************** Setters ************************************/
-    public void setName(String name)               { this.name = name;               }
-    public void setMeasurement(String measurement) { this.measurement = measurement; }
-=======
     public String getQty()         { return this.qty;         }
 
     /*********************************** Setters ************************************/
@@ -90,5 +62,4 @@ public class Ingredient extends AppCompatActivity {
             this.qty = qty;
         }
     }
->>>>>>> Stashed changes
 }

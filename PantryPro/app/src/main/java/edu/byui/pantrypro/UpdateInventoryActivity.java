@@ -8,22 +8,30 @@ import android.view.View;
 import android.widget.EditText;
 
 public class UpdateInventoryActivity extends AppCompatActivity{
-    EditText inputText;
+    EditText modifyName;
+    EditText modifyQuantity;
     MyDBHandler dbHandler;
     Intent shareButtonIntent;
+    Ingredient oldIngredient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_inventory);
         dbHandler = new MyDBHandler(this, null, null, 1);
-        inputText = (EditText) findViewById(R.id.nameInput);
+        modifyName = (EditText) findViewById(R.id.modifyName);
+        modifyQuantity = (EditText) findViewById(R.id.modifyQuantity);
+
+        Bundle extras = getIntent().getExtras();
+        String name = extras.getString("NAME");
+        String quantity = extras.getString("QUANTITY");
+        oldIngredient = new Ingredient(name, quantity);
     }
 
     //Add a product to the database
-    public void addItemClicked(View view){
-        Item item = new Item(inputText.getText().toString());
-        dbHandler.addItem(item);
+    public void updateItem(View view){
+        Ingredient newIngredient = new Ingredient(modifyName.getText().toString(), modifyQuantity.getText().toString());
+        dbHandler.updateIngredient(newIngredient, oldIngredient);
         shareButtonIntent = new Intent(UpdateInventoryActivity.this, InventoryActivity.class);
         startActivity(shareButtonIntent);
     }

@@ -82,6 +82,12 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         db.close();
     }
 
+    public void updateIngredient(Ingredient newIngredient, Ingredient oldIngredient){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMNAME + " = \'" + newIngredient.getName() + "\', " + COLUMN_QUANTITY + " = \'" + newIngredient.getQty() + "\' WHERE " + COLUMN_ITEMNAME + "=\"" + oldIngredient.getName() + "\";");
+
+    }
+
     // delete product from the database
     public void deleteItem(String itemName) {
         SQLiteDatabase db = getWritableDatabase();

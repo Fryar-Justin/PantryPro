@@ -39,4 +39,13 @@ public class IngredientDetailsActivity extends AppCompatActivity {
         Intent returnInventory = new Intent(IngredientDetailsActivity.this, InventoryActivity.class);
         startActivity(returnInventory);
     }
+
+    public void modifyItem(View view){
+        String ingredientName = outputName.getText().toString();
+        String ingredientQuantity = outputQuantity.getText().toString();
+        Intent modify = new Intent(IngredientDetailsActivity.this, UpdateInventoryActivity.class);
+        modify.putExtra("NAME", ingredientName);
+        modify.putExtra("QUANTITY", ingredientQuantity);
+        startActivity(modify);
+    }
 }

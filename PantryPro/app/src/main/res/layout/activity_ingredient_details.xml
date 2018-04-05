@@ -30,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
+        android:onClick="modifyItem"
         android:text="Modify"
         app:layout_constraintBottom_toTopOf="@+id/include"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +88,7 @@
         app:layout_constraintStart_toEndOf="@+id/textView8" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/updateItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

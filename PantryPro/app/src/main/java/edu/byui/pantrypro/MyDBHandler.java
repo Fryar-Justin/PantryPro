@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
 import android.content.Context;
 import android.content.ContentValues;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         onCreate(db);
     }
 
-   //product is the class that will be stored
+    //product is the class that will be stored
     public void addItem(Item item){
         //sets different values for different columns and makes inserting easy
 
@@ -105,21 +106,37 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         // move to the first row in your results
         c.moveToFirst();
 
-        int counter = 0;
         while (!c.isAfterLast()) {
             if (c.getString(c.getColumnIndex(COLUMN_ITEMNAME)) != null) {
                 dbString += c.getString(c.getColumnIndex(COLUMN_ITEMNAME));
                 dbString += "\n";
             }
-            if (counter == 5) {
-                break;
-            }
-            counter++;
             c.moveToNext();
         }
         c.close();
         db.close();
         return dbString;
+    }
+
+    // finds an entry in the database, I think it works...
+    public String findEntry(String table, String column, String search, String returnColumn) {
+        String query = "SELECT * FROM " + table + " WHERE " + column + " = " + "\"" + search + "\"";
+        SQLiteDatabase db = getWritableDatabase();
+
+        try {
+            // point cursor to a location in results
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
+
+            String dbString = c.getString(c.getColumnIndex(returnColumn));
+            c.close();
+            db.close();
+
+            return dbString;
+        } catch (Exception e) {
+            Log.e("MyDBHandler", e.getMessage());
+            return e.getMessage();
+        }
     }
 
 

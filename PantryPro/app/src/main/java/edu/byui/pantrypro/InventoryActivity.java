@@ -45,6 +45,11 @@ public class InventoryActivity extends AppCompatActivity {
         shoppingList.setAdapter(arrayAdapter);
     }
 
+    public void mealClicked(View view){
+        shareButtonIntent = new Intent(InventoryActivity.this, MealPlanActivity.class);
+        startActivity(shareButtonIntent);
+    }
+
     private void setListenersAndLabels() {
         // set the label
         TextView activityLabel = findViewById(R.id.textView_MenuLabel);

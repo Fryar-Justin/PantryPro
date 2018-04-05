@@ -119,6 +119,52 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     }
 
     // finds an entry in the database, I think it works...
+    public String findEntry(String search) {
+        String query = "SELECT * FROM " + TABLE_ITEMS + " WHERE " + COLUMN_ITEMNAME + " = " + "\"" + search + "\"";
+        SQLiteDatabase db = getWritableDatabase();
+
+        try {
+            // point cursor to a location in results
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
+
+            String dbString = c.getString(c.getColumnIndex(COLUMN_QUANTITY));
+            c.close();
+            db.close();
+
+            return dbString;
+        } catch (Exception e) {
+            Log.e("MyDBHandler", e.getMessage());
+            return e.getMessage();
+        }
+    }
+
+    public ArrayList<String> populateArrayList(){
+        ArrayList<String> stringList = new ArrayList<String>();
+
+
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_ITEMS + " WHERE 1";
+
+        //Cursor point to a location in your results
+        Cursor c = db.rawQuery(query, null);
+        //Move to the first row in your results
+        c.moveToFirst();
+
+        while(!c.isAfterLast()) {
+            if (c.getString(c.getColumnIndex("itemname")) != null) {
+                stringList.add(c.getString(c.getColumnIndex("itemname")));
+            }
+            c.moveToNext();
+        }
+
+        c.close();
+        return stringList;
+    }
+}
+
+/*
+    // finds an entry in the database, I think it works...
     public String findEntry(String table, String column, String search, String returnColumn) {
         String query = "SELECT * FROM " + table + " WHERE " + column + " = " + "\"" + search + "\"";
         SQLiteDatabase db = getWritableDatabase();
@@ -139,8 +185,6 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         }
     }
 
-
-/*
         //Print database as a string
         public String databaseToString(){
             String dbString = "";
@@ -165,52 +209,6 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
             return dbString;
         }
     */
-    public ArrayList<String> populateArrayList(){
-        ArrayList<String> stringList = new ArrayList<String>();
-
-
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_ITEMS + " WHERE 1";
-
-        //Cursor point to a location in your results
-        Cursor c = db.rawQuery(query, null);
-        //Move to the first row in your results
-        c.moveToFirst();
-
-        while(!c.isAfterLast()) {
-            if (c.getString(c.getColumnIndex("itemname")) != null) {
-                stringList.add(c.getString(c.getColumnIndex("itemname")));
-            }
-            c.moveToNext();
-        }
-
-        c.close();
-        return stringList;
-    }
-
-    public String getItemQuantity(String name){
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_ITEMS + " WHERE 1";
-
-        //Cursor point to a location in your results
-        Cursor c = db.rawQuery(query, null);
-        //Move to the first row in your results
-        c.moveToFirst();
-
-        while(!c.isAfterLast()) {
-            if (c.getString(c.getColumnIndex("itemname")) == name) {
-                String qty = c.getString(c.getColumnIndex("itemQuantity"));
-                c.close();
-                return qty;
-            }
-            c.moveToNext();
-        }
-        c.close();
-        return null;
-    }
-}
-
-
 
 
 

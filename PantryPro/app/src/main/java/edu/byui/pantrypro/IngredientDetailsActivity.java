@@ -24,7 +24,7 @@ public class IngredientDetailsActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         String name = extras.getString("NAME");
-        String quantity = dbHandler.getItemQuantity(name);
+        String quantity = dbHandler.findEntry(name);
 
         outputName = (TextView) findViewById(R.id.outputName);
         outputQuantity = (TextView) findViewById(R.id.outputQuantity);

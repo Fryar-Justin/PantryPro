@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class UpdateInventoryActivity extends AppCompatActivity{
     EditText modifyName;
@@ -25,6 +26,8 @@ public class UpdateInventoryActivity extends AppCompatActivity{
         Bundle extras = getIntent().getExtras();
         String name = extras.getString("NAME");
         String quantity = extras.getString("QUANTITY");
+        modifyName.setText(name, TextView.BufferType.EDITABLE);
+        modifyQuantity.setText(quantity, TextView.BufferType.EDITABLE);
         oldIngredient = new Ingredient(name, quantity);
     }
 

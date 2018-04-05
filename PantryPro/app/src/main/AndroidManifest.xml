@@ -27,7 +27,8 @@
         <activity android:name=".IngredientDetailsActivity" />
         <activity android:name=".AssignRecipeActivity" />
         <activity android:name=".GroceryListActivity" />
-        <activity android:name=".RecipeInventoryActivity"/>
+        <activity android:name=".RecipeInventoryActivity" />
+        <activity android:name=".UpdateInventoryActivity" />
     </application>
 
 </manifest>

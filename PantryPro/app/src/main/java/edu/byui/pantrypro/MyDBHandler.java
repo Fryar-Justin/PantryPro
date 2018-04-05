@@ -13,11 +13,12 @@ import java.util.ArrayList;
 public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
     private static MyDBHandler mydb;
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 8;
     private static final String DATABASE_NAME = "items.db";
     public static final String TABLE_ITEMS = "items";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_ITEMNAME = "itemname";
+    public static final String COLUMN_QUANTITY = "quantity";
 
     public static final String TABLE_RECIPES = "recipe";
     public static final String COLUMN_RECIPENAME = "recipename";
@@ -25,23 +26,29 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     public static final String COLUMN_NOTES = "notes";
     public static final String COLUMN_INGREDIENTS = "ingredients";
 
+    public static final String TABLE_GROCERY = "grocery";
+    public static final String COLUMN_GROCERYNAME = "groceryname";
+
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = "CREATE TABLE " + TABLE_ITEMS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_ITEMNAME + " TEXT NOT NULL" + ");";
+        String query = "CREATE TABLE " + TABLE_ITEMS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_ITEMNAME + " TEXT NOT NULL," + COLUMN_QUANTITY + " TEXT" + ");";
         String query2 = "CREATE TABLE " + TABLE_RECIPES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_RECIPENAME + " TEXT NOT NULL, " + COLUMN_DIRECTIONS + " TEXT, " + COLUMN_NOTES + " TEXT, " + COLUMN_INGREDIENTS + " TEXT" + ");";
+        String query3 = "CREATE TABLE " + TABLE_GROCERY + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_GROCERYNAME + " TEXT NOT NULL );";
         //execute the query
         db.execSQL(query);
         db.execSQL(query2);
+        db.execSQL(query3);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROCERY);
         onCreate(db);
     }
 
@@ -60,18 +67,19 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         db.close();
     }
 
-    // adds a new recipe to the database
-    // TODO: Hanson - I Need you to add the required functionality to this, I don't know how exactly to make this work but I think I'm close
-    public void addRecipe(Recipe recipe) {
+    //product is the class that will be stored
+    public void addIngredient(Ingredient ingredient){
+        //sets different values for different columns and makes inserting easy
+
         ContentValues values = new ContentValues();
-
-        values.put(COLUMN_RECIPENAME, recipe.getName());
-        values.put(COLUMN_DIRECTIONS, recipe.getDirections());
-        values.put(COLUMN_NOTES, recipe.getNotes());
-        values.put(COLUMN_INGREDIENTS, recipe.getIngredients().toString());
-
+        //2 paramaters. first column. second value
+        values.put(COLUMN_ITEMNAME, ingredient.getName());
+        values.put(COLUMN_QUANTITY, ingredient.getQty());
+        //database item
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_RECIPES, null, values);
+        //purely an insert statement rather than executing a query. 3 parameters
+        //name of table, optional null?, list of values or contentvalues
+        db.insert(TABLE_ITEMS, null, values);
         db.close();
     }
 
@@ -125,15 +133,8 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         }
     }
 
-    /*
-        //Delete from database
-        public void deleteProduct(String productName){
-            //database item
-            SQLiteDatabase db = getWritableDatabase();
-            //delete item where itemname is the same as what was entered
-            db.execSQL("DELETE FROM " + TABLE_PRODUCTS + " WHERE " + COLUMN_PRODUCTNAME + "=\"" + productName + "\";");
-        }
 
+/*
         //Print database as a string
         public String databaseToString(){
             String dbString = "";
@@ -179,6 +180,27 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
         c.close();
         return stringList;
+    }
+
+    public String getItemQuantity(String name){
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_ITEMS + " WHERE 1";
+
+        //Cursor point to a location in your results
+        Cursor c = db.rawQuery(query, null);
+        //Move to the first row in your results
+        c.moveToFirst();
+
+        while(!c.isAfterLast()) {
+            if (c.getString(c.getColumnIndex("itemname")) == name) {
+                String qty = c.getString(c.getColumnIndex("itemQuantity"));
+                c.close();
+                return qty;
+            }
+            c.moveToNext();
+        }
+        c.close();
+        return null;
     }
 }
 

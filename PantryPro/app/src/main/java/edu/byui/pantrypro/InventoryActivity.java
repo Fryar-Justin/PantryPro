@@ -60,10 +60,12 @@ public class InventoryActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        String food = String.valueOf(adapterView.getItemAtPosition(i));
-                        Intent intent = new Intent(InventoryActivity.this, IngredientDetailsActivity.class);
-                        intent.putExtra("food", food);
-                        startActivity(intent);
+                        String ingredientName = String.valueOf(adapterView.getItemAtPosition(i));
+                        Intent itemDetail = new Intent(InventoryActivity.this, IngredientDetailsActivity.class);
+                        itemDetail.putExtra("NAME", ingredientName);
+                        startActivity(itemDetail);
+                        //String quantity = dbHandler.getItemQuantity(ingredientName);
+                        //Toast.makeText(InventoryActivity.this, quantity, Toast.LENGTH_SHORT).show();
                     }
                 }
         );

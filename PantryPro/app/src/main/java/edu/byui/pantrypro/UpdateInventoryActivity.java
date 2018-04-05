@@ -6,28 +6,25 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
-public class addInventoryItem extends AppCompatActivity{
+public class UpdateInventoryActivity extends AppCompatActivity{
     EditText inputText;
-    EditText inputTextQuantity;
     MyDBHandler dbHandler;
     Intent shareButtonIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_inventory_item);
+        setContentView(R.layout.activity_update_inventory);
         dbHandler = new MyDBHandler(this, null, null, 1);
         inputText = (EditText) findViewById(R.id.nameInput);
-        inputTextQuantity = (EditText) findViewById(R.id.quantityInput);
     }
 
     //Add a product to the database
     public void addItemClicked(View view){
-        Ingredient ingredient = new Ingredient(inputText.getText().toString(),inputTextQuantity.getText().toString());
-        dbHandler.addIngredient(ingredient);
-        shareButtonIntent = new Intent(addInventoryItem.this, InventoryActivity.class);
+        Item item = new Item(inputText.getText().toString());
+        dbHandler.addItem(item);
+        shareButtonIntent = new Intent(UpdateInventoryActivity.this, InventoryActivity.class);
         startActivity(shareButtonIntent);
     }
 /*

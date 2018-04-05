@@ -1,42 +1,42 @@
 package edu.byui.pantrypro;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 public class IngredientDetailsActivity extends AppCompatActivity {
-
-    TextView name;
-    TextView measurement;
     MyDBHandler dbHandler;
-    String ingredient;
+    TextView outputName;
+    TextView outputQuantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredient_details);
+        dbHandler = new MyDBHandler(this, null, null, 1);
 
         TextView activityLabel = findViewById(R.id.textView_MenuLabel);
         activityLabel.setText(R.string.ingredientDetails);
 
-        dbHandler = new MyDBHandler(this, null, null, 1);
-
         Bundle extras = getIntent().getExtras();
-        ingredient = "";
-        if (extras != null) {
-            ingredient = extras.getString("food");
-        }
+        String name = extras.getString("NAME");
+        String quantity = dbHandler.getItemQuantity(name);
 
-        name = findViewById(R.id.textView_Name);
-        measurement = findViewById(R.id.textView_Quantity);
+        outputName = (TextView) findViewById(R.id.outputName);
+        outputQuantity = (TextView) findViewById(R.id.outputQuantity);
 
-        name.setText(ingredient);
-        measurement.setText(dbHandler.findEntry("recipe", "recipename", ingredient, "ingredients"));
+        outputName.setText(name);
+        outputQuantity.setText(quantity);
+
     }
 
-    public void deleteFromDatabase(View view) {
-        dbHandler.deleteItem(ingredient);
+    public void deleteItem(View view){
+        dbHandler.deleteItem((String)outputName.getText());
+        Intent returnInventory = new Intent(IngredientDetailsActivity.this, InventoryActivity.class);
+        startActivity(returnInventory);
     }
 }

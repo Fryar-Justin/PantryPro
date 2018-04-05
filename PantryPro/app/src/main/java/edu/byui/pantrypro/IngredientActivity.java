@@ -13,6 +13,8 @@ public class IngredientActivity extends AppCompatActivity {
 
         TextView activityLabel = findViewById(R.id.textView_MenuLabel);
         activityLabel.setText(R.string.ingredient);
+
+
     }
 
 

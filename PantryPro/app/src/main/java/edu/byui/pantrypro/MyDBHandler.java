@@ -83,6 +83,10 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         db.close();
     }
 
+    public void addRecipe(Recipe recipe) {
+
+    }
+
     public void updateIngredient(Ingredient newIngredient, Ingredient oldIngredient){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMNAME + " = \'" + newIngredient.getName() + "\', " + COLUMN_QUANTITY + " = \'" + newIngredient.getQty() + "\' WHERE " + COLUMN_ITEMNAME + "=\"" + oldIngredient.getName() + "\";");

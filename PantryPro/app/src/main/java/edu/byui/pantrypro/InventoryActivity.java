@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 public class InventoryActivity extends AppCompatActivity {
 
     ListView shoppingList;
@@ -97,6 +99,7 @@ public class InventoryActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         // do nothing because we are already on this screen
+                        Toast.makeText(InventoryActivity.this, "Inventory Button", LENGTH_LONG).show();
                     }
                 }
         );

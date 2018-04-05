@@ -32,7 +32,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
     // save the entire recipe to the database
     public void saveToDatabase(View view) {
-//        EditText inputText = findViewById(R.id.input_Ingredient);
+//        EditText inputText = findViewById(R.id.input_Quantity);
 //
 //        Item item = new Item(inputText.getText().toString());
 //        dbHandler.addItem(item);
@@ -55,15 +55,15 @@ public class AddRecipeActivity extends AppCompatActivity {
     // add the ingredient to the recipe object
     public void addIngredient(View view) {
         // find the input boxes
-        EditText ingredientName = findViewById(R.id.input_Ingredient);
-        EditText ingredientMeasurement = findViewById(R.id.input_Measurement);
+        EditText ingredientName = findViewById(R.id.input_Name);
+        EditText ingredientQuantity = findViewById(R.id.input_Quantity);
 
         // get the values
         String name = ingredientName.getText().toString();
-        String measurement = ingredientMeasurement.getText().toString();
+        String quantity = ingredientQuantity.getText().toString();
 
         // assign it to the recipe
-        newRecipe.addIngredient(new Ingredient(name, measurement));
+        newRecipe.addIngredient(new Ingredient(name, quantity));
 
         // update the listview for the ingredients
         updateIngredientListView();
@@ -72,7 +72,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     // delete the ingredient from the recipe object
     public void deleteIngredient(View view) {
         // find the input boxes
-        EditText ingredientName = findViewById(R.id.input_Ingredient);
+        EditText ingredientName = findViewById(R.id.input_Quantity);
 
         // get the values
         String name = ingredientName.getText().toString();

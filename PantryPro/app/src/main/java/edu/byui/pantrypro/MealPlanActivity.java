@@ -21,10 +21,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import static android.widget.Toast.LENGTH_LONG;
+import static android.widget.Toast.LENGTH_SHORT;
+
 public class MealPlanActivity extends AppCompatActivity{
     ListView inputDate;
     MyDBHandler dbHandler;
-    Intent shareButtonIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class MealPlanActivity extends AppCompatActivity{
         setContentView(R.layout.activity_meal_plan);
         inputDate = (ListView) findViewById(R.id.datetext);
 
+        // set the listeners and labels
+        setRecipiesAndLabels();
 
         dbHandler = new MyDBHandler(this, null, null, 1);
 
@@ -40,8 +44,6 @@ public class MealPlanActivity extends AppCompatActivity{
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, days );
         inputDate.setAdapter(arrayAdapter);
 
-        // set the listeners and labels
-        setRecipiesAndLabels();
     }
 
     public ArrayList<String> populateDays(){
@@ -66,7 +68,6 @@ public class MealPlanActivity extends AppCompatActivity{
         ListView shoppingList = findViewById(R.id.datetext);
         shoppingList.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
-                    @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String food = String.valueOf(adapterView.getItemAtPosition(i));
                         Toast.makeText(MealPlanActivity.this, food, Toast.LENGTH_SHORT).show();
@@ -89,7 +90,6 @@ public class MealPlanActivity extends AppCompatActivity{
         Button backButton = findViewById(R.id.button_TopLeft);
         backButton.setOnClickListener(
                 new View.OnClickListener() {
-                    @Override
                     public void onClick(View v) {
                         finish();
                     }
@@ -98,8 +98,7 @@ public class MealPlanActivity extends AppCompatActivity{
 
         // set the Lists navigation at the bottom
         Button listsButton = findViewById(R.id.button_Inventory);
-        listsButton.setOnClickListener(
-                new View.OnClickListener() {
+        listsButton.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         Intent inventoryActivity = new Intent(MealPlanActivity.this, InventoryActivity.class);
                         startActivity(inventoryActivity);
@@ -109,8 +108,7 @@ public class MealPlanActivity extends AppCompatActivity{
 
         // set the Recipes navigation at the bottom
         Button recipesButton = findViewById(R.id.button_Recipes);
-        recipesButton.setOnClickListener(
-                new View.OnClickListener() {
+        recipesButton.setOnClickListener( new View.OnClickListener() {
                     public void onClick(View v) {
                         Intent recipeInventory = new Intent(MealPlanActivity.this, RecipeInventoryActivity.class);
                         startActivity(recipeInventory);
@@ -124,19 +122,21 @@ public class MealPlanActivity extends AppCompatActivity{
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         // do nothing because we are already on this screen
+                        Toast.makeText(MealPlanActivity.this, "You are already here!", LENGTH_SHORT).show();
                     }
                 }
         );
 
-        // set the Recipes navigation at the bottom
+        // set the Grocery's navigation at the bottom
         Button groceryList = findViewById(R.id.button_Grocery);
         groceryList.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Intent recipeInventory = new Intent(MealPlanActivity.this, GroceryListActivity.class);
-                        startActivity(recipeInventory);
+                        Intent groceryInventory = new Intent(MealPlanActivity.this, GroceryListActivity.class);
+                        startActivity(groceryInventory);
                     }
                 }
         );
+
     }
 }

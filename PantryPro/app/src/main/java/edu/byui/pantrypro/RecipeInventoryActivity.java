@@ -10,6 +10,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static android.widget.Toast.LENGTH_LONG;
+import static android.widget.Toast.LENGTH_SHORT;
+
 public class RecipeInventoryActivity extends AppCompatActivity {
 
     @Override
@@ -79,6 +82,7 @@ public class RecipeInventoryActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         // do nothing because we are already on this screen
+                        Toast.makeText(RecipeInventoryActivity.this, "You are already here!", LENGTH_SHORT).show();
                     }
                 }
         );

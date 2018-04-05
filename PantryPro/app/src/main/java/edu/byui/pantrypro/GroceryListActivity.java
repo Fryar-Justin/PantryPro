@@ -10,6 +10,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static android.widget.Toast.LENGTH_LONG;
+import static android.widget.Toast.LENGTH_SHORT;
+
 public class GroceryListActivity extends AppCompatActivity {
 
     @Override
@@ -33,7 +36,7 @@ public class GroceryListActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String food = String.valueOf(adapterView.getItemAtPosition(i));
-                        Toast.makeText(GroceryListActivity.this, food, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GroceryListActivity.this, food, LENGTH_SHORT).show();
                     }
                 }
         );
@@ -99,6 +102,7 @@ public class GroceryListActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         // do nothing because we are already on this screen
+                        Toast.makeText(GroceryListActivity.this, "You are already here!", LENGTH_SHORT).show();
                     }
                 }
         );

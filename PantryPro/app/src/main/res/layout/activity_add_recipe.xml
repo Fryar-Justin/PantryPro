@@ -66,7 +66,7 @@
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/ingredient"
@@ -126,7 +126,7 @@
         app:layout_constraintStart_toEndOf="@+id/textView12" />
 
     <EditText
-        android:id="@+id/input_Measurement"
+        android:id="@+id/input_Quantity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -178,7 +178,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/measurement"
+        android:text="@string/quantity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
 import android.content.Context;
 import android.content.ContentValues;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -60,11 +61,9 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     }
 
     // adds a new recipe to the database
-    // TODO: Hanson - I Need you to add the required functionality to this, I don't know how exactly to make this work but I think I'm close. It will really depend on how you implement the database tables
+    // TODO: Hanson - I Need you to add the required functionality to this, I don't know how exactly to make this work but I think I'm close
     public void addRecipe(Recipe recipe) {
         ContentValues values = new ContentValues();
-
-
 
         values.put(COLUMN_RECIPENAME, recipe.getName());
         values.put(COLUMN_DIRECTIONS, recipe.getDirections());
@@ -103,6 +102,27 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         c.close();
         db.close();
         return dbString;
+    }
+
+    // finds an entry in the database, I think it works...
+    public String findEntry(String table, String column, String search, String returnColumn) {
+        String query = "SELECT * FROM " + table + " WHERE " + column + " = " + "\"" + search + "\"";
+        SQLiteDatabase db = getWritableDatabase();
+
+        try {
+            // point cursor to a location in results
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
+
+            String dbString = c.getString(c.getColumnIndex(returnColumn));
+            c.close();
+            db.close();
+
+            return dbString;
+        } catch (Exception e) {
+            Log.e("MyDBHandler", e.getMessage());
+            return e.getMessage();
+        }
     }
 
     /*

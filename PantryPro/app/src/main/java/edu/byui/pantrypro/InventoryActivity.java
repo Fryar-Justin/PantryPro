@@ -61,8 +61,9 @@ public class InventoryActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String food = String.valueOf(adapterView.getItemAtPosition(i));
-//                        Toast.makeText(InventoryActivity.this, food, Toast.LENGTH_SHORT).show();
-
+                        Intent intent = new Intent(InventoryActivity.this, IngredientDetailsActivity.class);
+                        intent.putExtra("food", food);
+                        startActivity(intent);
                     }
                 }
         );

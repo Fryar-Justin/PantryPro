@@ -32,15 +32,17 @@ public class RecipeInventoryActivity extends AppCompatActivity {
         setRecipiesAndLabels();
 
         // TODO: need to print the recipes from the database here
+        printRecipes();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        printDatabase();
+        printRecipes();
     }
 
-    public void printDatabase(){
+    public void printRecipes(){
+        // TODO: This is currently printing the ingredients, needs to print the recipes
         ArrayList<String> stringList = dbHandler.populateArrayList();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, stringList );
         shoppingList.setAdapter(arrayAdapter);

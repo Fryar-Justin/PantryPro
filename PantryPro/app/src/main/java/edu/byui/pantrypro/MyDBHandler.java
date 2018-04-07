@@ -29,6 +29,8 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     public static final String TABLE_GROCERY = "grocery";
     public static final String COLUMN_GROCERYNAME = "groceryname";
 
+    // TODO: We need to add another table here to handle the days of the week or whatever your plan is for this
+
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }

@@ -81,6 +81,7 @@ public class MealPlanActivity extends AppCompatActivity{
                         String selection = String.valueOf(adapterView.getItemAtPosition(i));
                         if (isSelectionValid(selection)) {
                             Intent assignToDay = new Intent(MealPlanActivity.this, AssignRecipeToDay.class);
+                            assignToDay.putExtra("day", selection);
                             startActivity(assignToDay);
                         }
                         else {

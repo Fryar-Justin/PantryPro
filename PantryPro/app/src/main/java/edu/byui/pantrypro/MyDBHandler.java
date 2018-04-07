@@ -96,6 +96,18 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
     public void addRecipe(Recipe recipe) {
         // TODO: Needs to add a recipe to the database, if we have to we will create our own parsing program
+        ContentValues values = new ContentValues();
+        //2 paramaters. first column. second value
+        values.put(COLUMN_RECIPENAME, recipe.getName());
+        values.put(COLUMN_DIRECTIONS, recipe.getDirections());
+        values.put(COLUMN_NOTES, recipe.getNotes());
+        values.put(COLUMN_INGREDIENTS, recipe.stringifyIngredients());
+        //database item
+        SQLiteDatabase db = getWritableDatabase();
+        //purely an insert statement rather than executing a query. 3 parameters
+        //name of table, optional null?, list of values or contentvalues
+        db.insert(TABLE_RECIPES, null, values);
+        db.close();
     }
 
     public void updateIngredient(Ingredient newIngredient, Ingredient oldIngredient){
@@ -169,6 +181,29 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         while(!c.isAfterLast()) {
             if (c.getString(c.getColumnIndex("itemname")) != null) {
                 stringList.add(c.getString(c.getColumnIndex("itemname")));
+            }
+            c.moveToNext();
+        }
+
+        c.close();
+        return stringList;
+    }
+
+    public ArrayList<String> populateRecipeArrayList(){
+        ArrayList<String> stringList = new ArrayList<String>();
+
+
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_RECIPES + " WHERE 1";
+
+        //Cursor point to a location in your results
+        Cursor c = db.rawQuery(query, null);
+        //Move to the first row in your results
+        c.moveToFirst();
+
+        while(!c.isAfterLast()) {
+            if (c.getString(c.getColumnIndex("recipename")) != null) {
+                stringList.add(c.getString(c.getColumnIndex("recipename")));
             }
             c.moveToNext();
         }

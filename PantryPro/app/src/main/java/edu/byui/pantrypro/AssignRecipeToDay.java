@@ -3,10 +3,12 @@ package edu.byui.pantrypro;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +62,7 @@ public class AssignRecipeToDay extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String recipeName = String.valueOf(adapterView.getItemAtPosition(i));
                         setRecipeToDay(recipeName);
+                        populateMultiline(); // TODO: remove
                     }
                 }
         );
@@ -71,6 +74,20 @@ public class AssignRecipeToDay extends AppCompatActivity {
         Button addButton = findViewById(R.id.button_TopRight);
         addButton.setVisibility(View.INVISIBLE);
 
+    }
+
+    private void populateMultiline() {
+        EditText viewer = findViewById(R.id.editText_Look);
+
+        Ingredient ing = new Ingredient("Cheerios", "2 Cups");
+
+        String test = ing.stringify();
+        Ingredient test2 = new Ingredient(ing.parse(test));
+
+        Log.e("Stringify", "Stringify: " + test);
+        Log.e("Stringify", "Parse: Name - " + test2.getName() + " Qty - " + test2.getQty());
+
+        viewer.setText(ing.toString());
     }
 
     private void populateRecipes() {

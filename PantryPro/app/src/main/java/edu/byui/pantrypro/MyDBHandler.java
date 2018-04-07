@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
     private static MyDBHandler mydb;
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
     private static final String DATABASE_NAME = "items.db";
     public static final String TABLE_ITEMS = "items";
     public static final String COLUMN_ID = "_id";
@@ -29,6 +29,12 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     public static final String TABLE_GROCERY = "grocery";
     public static final String COLUMN_GROCERYNAME = "groceryname";
 
+    public static final String TABLE_MEALPLAN = "mealplan";
+    public static final String COLUMN_DAY = "day";
+    public static final String COLUMN_MORNING = "morning";
+    public static final String COLUMN_AFTERNOON = "afternoon";
+    public static final String COLUMN_EVENING = "evening";
+
     // TODO: We need to add another table here to handle the days of the week or whatever your plan is for this
 
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -40,10 +46,12 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         String query = "CREATE TABLE " + TABLE_ITEMS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_ITEMNAME + " TEXT NOT NULL," + COLUMN_QUANTITY + " TEXT" + ");";
         String query2 = "CREATE TABLE " + TABLE_RECIPES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_RECIPENAME + " TEXT NOT NULL, " + COLUMN_DIRECTIONS + " TEXT, " + COLUMN_NOTES + " TEXT, " + COLUMN_INGREDIENTS + " TEXT" + ");";
         String query3 = "CREATE TABLE " + TABLE_GROCERY + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_GROCERYNAME + " TEXT NOT NULL );";
+        String query4 = "CREATE TABLE " + TABLE_MEALPLAN + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_DAY + " TEXT NOT NULL, " + COLUMN_MORNING + " TEXT, " + COLUMN_AFTERNOON + " TEXT, " + COLUMN_EVENING + " TEXT" + ");";
         //execute the query
         db.execSQL(query);
         db.execSQL(query2);
         db.execSQL(query3);
+        db.execSQL(query4);
     }
 
     @Override
@@ -51,6 +59,7 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROCERY);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEALPLAN);
         onCreate(db);
     }
 
@@ -86,7 +95,7 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     }
 
     public void addRecipe(Recipe recipe) {
-
+        // TODO: Needs to add a recipe to the database, if we have to we will create our own parsing program
     }
 
     public void updateIngredient(Ingredient newIngredient, Ingredient oldIngredient){

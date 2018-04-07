@@ -36,6 +36,11 @@ public class Ingredient extends AppCompatActivity {
         setQty        ("Default");
     }
 
+    public Ingredient(Ingredient newIng) {
+        setName(newIng.getName());
+        setQty(newIng.getQty());
+    }
+
     // non-default constructor
     public Ingredient(String name, String qty) {
         // set from parameters
@@ -61,5 +66,51 @@ public class Ingredient extends AppCompatActivity {
             // valid, assign it
             this.qty = qty;
         }
+    }
+
+    /*********************************** Member Functions ************************************/
+    public String stringify() {
+        String stringified = "";
+
+        stringified = "{" + getName() + ":" + getQty() + "}";
+
+        return stringified;
+    }
+
+    public String stringify(Ingredient ing) {
+        String stringified = "";
+
+        stringified = "{" + ing.getName() + ":" + ing.getQty() + "}";
+
+        return stringified;
+    }
+
+    public Ingredient parse(String stringified) {
+        String parsedName = "";
+        String parsedQty = "";
+
+        boolean fLeftCurly = false;
+        boolean fRightCurly = false;
+        boolean fColon = false;
+        for (int i = 0; i < stringified.length(); i++) {
+            if (stringified.charAt(i) == '{') {
+                fLeftCurly = true;
+            }
+            else if (fLeftCurly && !fColon) {
+                if (stringified.charAt(i) != ':') {
+                    parsedName += stringified.charAt(i);
+                } else {
+                    fColon = true;
+                }
+            }
+            else if (fColon && !fRightCurly) {
+                if (stringified.charAt(i) == '}') {
+                    fRightCurly = true;
+                    break;
+                }
+                parsedQty += stringified.charAt(i);
+            }
+        }
+        return new Ingredient(parsedName, parsedQty);
     }
 }

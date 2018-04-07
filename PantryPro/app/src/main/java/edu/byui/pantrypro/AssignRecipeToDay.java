@@ -79,6 +79,11 @@ public class AssignRecipeToDay extends AppCompatActivity {
 
     private void setRecipeToDay(String recipeName) {
         // TODO: Needs to change a field in the db so that we know what recipe is assigned to what day
+
+        Toast.makeText(AssignRecipeToDay.this, "Boom! It's done!", Toast.LENGTH_SHORT).show();
+        // set the currently assigned recipe
+        TextView currentRecipe = findViewById(R.id.textView_CurrentRecipe);
+        currentRecipe.setText(recipeName);
     }
 
     private String getCurrentRecipe(String day) {
@@ -86,7 +91,7 @@ public class AssignRecipeToDay extends AppCompatActivity {
         return "Not yet assigned";
     }
 
-    public void printRecipes(){
+    public void printRecipes() {
         // TODO: This just currently prints the ingredients, we need to change it to print the recipes
         ArrayList<String> stringList = dbHandler.populateArrayList();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, stringList );

@@ -1,5 +1,7 @@
 package edu.byui.pantrypro;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /*************************************************************************************************
@@ -90,6 +92,66 @@ public class Recipe {
     // addIngredient(Ingredient)    - Adds to list of ingredients
     // removeIngredient(Ingredient) - Removes from list of ingredients
     // clearIngredients()           - Removes all ingredients
+    // stringifyIngredients()       - Stringifies the name of the ingredients
+    // parseIngredients()           - Parses a string of ingredients
+
+    /*********************************************************************
+     * stringifyIngredients
+     *
+     * Description: Takes the name of each ingredient object and stringifies
+     *********************************************************************/
+    public String stringifyIngredients() {
+        String stringified = "";
+
+        for (int i = 0; i < ingredients.size(); i++) {
+            stringified += ingredients.get(i).stringify();
+        }
+        return stringified;
+    }
+
+    /*********************************************************************
+     * parseIngredients
+     *
+     * Description: parses a string of stringified ingredients
+     *********************************************************************/
+    public ArrayList<Ingredient> parseIngredients(String stringified) {
+        ArrayList<Ingredient> parsed = new ArrayList<Ingredient>();
+
+        boolean fLeftTag = false;
+        boolean fRightTag = false;
+
+        String parseThis = "";
+        int leftLocal = 0;
+        int rightLocal = 0;
+
+        for (int i = 0; i < stringified.length(); i++) {
+
+            if (stringified.charAt(i) == '{') {
+                fLeftTag = true;
+                leftLocal = i;
+            }
+            else if (stringified.charAt(i) == '}') {
+                fRightTag = true;
+                rightLocal = i;
+            }
+
+            if (fLeftTag && fRightTag) {
+                for (int j = leftLocal; j <= rightLocal; j++) {
+                    parseThis += stringified.charAt(j);
+                }
+                fLeftTag = false;
+                fRightTag = false;
+
+                Log.e("ParseIngredients", parseThis);
+                Ingredient ing = new Ingredient();
+
+                parsed.add(ing.parse(parseThis));
+                parseThis = "";
+            }
+        }
+
+        return parsed;
+    }
 
     /*********************************************************************
      * addIngredient

@@ -79,15 +79,29 @@ public class AssignRecipeToDay extends AppCompatActivity {
     private void populateMultiline() {
         EditText viewer = findViewById(R.id.editText_Look);
 
-        Ingredient ing = new Ingredient("Cheerios", "2 Cups");
+        Ingredient ing = new Ingredient("Cheerios", "1 Cups");
+        Ingredient ing2 = new Ingredient("Kix", "2 Cups");
+        Ingredient ing3 = new Ingredient("Snickers", "3 bars");
+        Ingredient ing4 = new Ingredient("WhatChaMaCallit", "4 bars");
+        Ingredient ing5 = new Ingredient("Heath", "5 bars");
 
-        String test = ing.stringify();
-        Ingredient test2 = new Ingredient(ing.parse(test));
+        Recipe rec = new Recipe();
+        rec.getIngredients().add(ing);
+        rec.getIngredients().add(ing2);
+        rec.getIngredients().add(ing3);
+        rec.getIngredients().add(ing4);
+        rec.getIngredients().add(ing5);
 
-        Log.e("Stringify", "Stringify: " + test);
-        Log.e("Stringify", "Parse: Name - " + test2.getName() + " Qty - " + test2.getQty());
+        ArrayList<Ingredient> al = rec.parseIngredients(rec.stringifyIngredients());
 
-        viewer.setText(ing.toString());
+        String outThis = rec.stringifyIngredients() + "\n\n";
+        for (int i = 0; i < al.size(); i++) {
+            String name = rec.getIngredients().get(i).getName();
+            String qty = rec.getIngredients().get(i).getQty();
+
+            outThis += "{" + name + ":" + qty + "}\n";
+        }
+        viewer.setText(outThis);
     }
 
     private void populateRecipes() {

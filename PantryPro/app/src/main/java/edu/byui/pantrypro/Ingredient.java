@@ -51,11 +51,11 @@ public class Ingredient extends AppCompatActivity {
     }
 
     /************************ Getters ************************/
-    public String getName()        { return this.name;        }
-    public String getQty()         { return this.qty;         }
+    public String getName()        { return this.name; }
+    public String getQty()         { return this.qty;  }
 
     /*********************************** Setters ************************************/
-    public void setName(String name)               { this.name = name;               }
+    public void setName(String name)               { this.name = name; }
 
     public void setQty(String qty) {
         // check if the number being assigned is valid
@@ -85,6 +85,8 @@ public class Ingredient extends AppCompatActivity {
         return stringified;
     }
 
+
+
     public Ingredient parse(String stringified) {
         String parsedName = "";
         String parsedQty = "";
@@ -92,6 +94,7 @@ public class Ingredient extends AppCompatActivity {
         boolean fLeftCurly = false;
         boolean fRightCurly = false;
         boolean fColon = false;
+
         for (int i = 0; i < stringified.length(); i++) {
             if (stringified.charAt(i) == '{') {
                 fLeftCurly = true;

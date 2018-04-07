@@ -5,25 +5,45 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class RecipeInventoryActivity extends AppCompatActivity {
 
+    ListView shoppingList;
+    MyDBHandler dbHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_inventory);
+        dbHandler = new MyDBHandler(this, null, null, 1);
+        shoppingList = (ListView) findViewById(R.id.listView_Recipes);
 
         // set the listeners and labels
         setRecipiesAndLabels();
 
         // TODO: need to print the recipes from the database here
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        printDatabase();
+    }
+
+    public void printDatabase(){
+        ArrayList<String> stringList = dbHandler.populateArrayList();
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, stringList );
+        shoppingList.setAdapter(arrayAdapter);
     }
 
     private void setRecipiesAndLabels() {

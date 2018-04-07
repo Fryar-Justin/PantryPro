@@ -40,4 +40,5 @@
     <string name="deleteingredient">Delete Ingredient</string>
     <string name="measurement">Measurement:</string>
     <string name="modify">Modify</string>
+    <string name="describehowtodeleteItem">Select ingredient to delete</string>
 </resources>

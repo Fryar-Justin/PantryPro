@@ -99,7 +99,7 @@ public class InventoryActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         // do nothing because we are already on this screen
-                        Toast.makeText(InventoryActivity.this, "Inventory Button", LENGTH_LONG).show();
+                        Toast.makeText(InventoryActivity.this, "You are already here!", LENGTH_LONG).show();
                     }
                 }
         );

@@ -18,6 +18,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
     MyDBHandler dbHandler;
     Recipe newRecipe;
+    ArrayList<Ingredient> myIngredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,9 @@ public class AddRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_recipe);
         newRecipe = new Recipe();
         dbHandler = new MyDBHandler(this, null, null, 1);
+
+        // initialize
+        myIngredients = newRecipe.getIngredients();
 
         // set the buttons and labels
         setRecipiesAndLabels();
@@ -45,49 +49,68 @@ public class AddRecipeActivity extends AppCompatActivity {
         EditText recipeDirections = findViewById(R.id.input_Directions);
         EditText recipeNotes = findViewById(R.id.input_Notes);
 
-        newRecipe.setName(recipeName.getText().toString());
-        newRecipe.setDirections(recipeDirections.getText().toString());
-        newRecipe.setNotes(recipeNotes.getText().toString());
 
-        dbHandler.addRecipe(newRecipe);
+        if (!(recipeName.getText().toString().equals(""))) {
+            newRecipe.setName(recipeName.getText().toString());
+            newRecipe.setDirections(recipeDirections.getText().toString());
+            newRecipe.setNotes(recipeNotes.getText().toString());
+
+            dbHandler.addRecipe(newRecipe);
+
+            finish();
+        }
+        else {
+            Toast.makeText(this, "You must enter a name for your recipe!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // add the ingredient to the recipe object
     public void addIngredient(View view) {
         // find the input boxes
-        EditText ingredientName = findViewById(R.id.input_Name);
+        EditText ingredientName = findViewById(R.id.input_Ingredient);
         EditText ingredientQuantity = findViewById(R.id.input_Quantity);
 
         // get the values
         String name = ingredientName.getText().toString();
         String quantity = ingredientQuantity.getText().toString();
 
-        // assign it to the recipe
-        newRecipe.addIngredient(new Ingredient(name, quantity));
+        if (!(name.equals(""))) {
+            // assign it to the recipe
+            newRecipe.addIngredient(new Ingredient(name, quantity));
 
-        // update the listview for the ingredients
-        updateIngredientListView();
-    }
+            // update the listview for the ingredients
+            updateIngredientListView();
 
-    // delete the ingredient from the recipe object
-    public void deleteIngredient(View view) {
-        // find the input boxes
-        EditText ingredientName = findViewById(R.id.input_Quantity);
-
-        // get the values
-        String name = ingredientName.getText().toString();
-
-        // assign it to the recipe
-        ArrayList<Ingredient> myIngredients = newRecipe.getIngredients();
-        for (int i = 0; i < myIngredients.size(); i++) {
-            if (name.equals(myIngredients.get(i).getName())) {
-                myIngredients.remove(i);
-            }
+            // remove the contents of those fields
+            ingredientName.setText("");
+            ingredientQuantity.setText("");
         }
-
-        // update the ingredient list view
-        updateIngredientListView();
+        else {
+            Toast.makeText(this, "You must enter a name for your ingredient!", Toast.LENGTH_SHORT).show();
+        }
     }
+
+    /**
+     * Don't need the delete function anymore because All you have to do is select the ingredient and it is removed
+     */
+//    // delete the ingredient from the recipe object
+//    public void deleteIngredient(View view) {
+//        // find the input boxes
+//        EditText ingredientName = findViewById(R.id.input_Name);
+//
+//        // get the values
+//        String name = ingredientName.getText().toString();
+//
+//        // assign it to the recipe
+//        for (int i = 0; i < myIngredients.size(); i++) {
+//            if (name.equals(myIngredients.get(i).getName())) {
+//                myIngredients.remove(i);
+//            }
+//        }
+//
+//        // update the ingredient list view
+//        updateIngredientListView();
+//    }
 
     // updates the specified listview with the values
     private void updateIngredientListView() {
@@ -117,8 +140,9 @@ public class AddRecipeActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        String food = String.valueOf(adapterView.getItemAtPosition(i));
-                        Toast.makeText(AddRecipeActivity.this, food, Toast.LENGTH_SHORT).show();
+//                        String food = String.valueOf(adapterView.getItemAtPosition(i));
+                        myIngredients.remove(i);
+                        updateIngredientListView();
                     }
                 }
         );

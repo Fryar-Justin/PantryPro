@@ -43,7 +43,6 @@ public class MealPlanActivity extends AppCompatActivity{
         ArrayList<String> days = populateDays();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, days );
         inputDate.setAdapter(arrayAdapter);
-
     }
 
     public ArrayList<String> populateDays(){
@@ -59,6 +58,16 @@ public class MealPlanActivity extends AppCompatActivity{
         return stringlist;
     }
 
+    private boolean isSelectionValid(String selection) {
+        return !selection.equals("Monday")    &&
+               !selection.equals("Tuesday")   &&
+               !selection.equals("Wednesday") &&
+               !selection.equals("Thursday")  &&
+               !selection.equals("Friday")    &&
+               !selection.equals("Saturday")  &&
+               !selection.equals("Sunday");
+    }
+
     private void setRecipiesAndLabels() {
         // set the label
         TextView activityLabel = findViewById(R.id.textView_MenuLabel);
@@ -69,14 +78,22 @@ public class MealPlanActivity extends AppCompatActivity{
         shoppingList.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        String food = String.valueOf(adapterView.getItemAtPosition(i));
-                        Toast.makeText(MealPlanActivity.this, food, Toast.LENGTH_SHORT).show();
+                        String selection = String.valueOf(adapterView.getItemAtPosition(i));
+                        if (isSelectionValid(selection)) {
+                            Intent assignToDay = new Intent(MealPlanActivity.this, AssignRecipeToDay.class);
+                            startActivity(assignToDay);
+                        }
+                        else {
+                            Toast.makeText(MealPlanActivity.this, "Don't pick those!", LENGTH_SHORT).show();
+                        }
                     }
                 }
         );
 
         // set the top right button click event
         Button addButton = findViewById(R.id.button_TopRight);
+        // we don't want to see the button here so make it invisible
+        addButton.setVisibility(View.INVISIBLE);
         addButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {

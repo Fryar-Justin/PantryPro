@@ -24,12 +24,11 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_Save">
+        app:layout_constraintTop_toBottomOf="@+id/textView_SelectToDelete">
 
     </ListView>
 
@@ -138,40 +137,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView14" />
 
-    <Button
-        android:id="@+id/button_AddIngredient"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:onClick="deleteIngredient"
-        android:text="@string/deleteingredient"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button_DeleteIngredient"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/button_DeleteIngredient"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="addIngredient"
-        android:text="@string/addingredient"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-    <Button
-        android:id="@+id/button_Save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:onClick="saveToDatabase"
-        android:text="@string/save"
-        app:layout_constraintEnd_toStartOf="@+id/button_AddIngredient"
-        app:layout_constraintStart_toEndOf="@+id/button_DeleteIngredient"
-        app:layout_constraintTop_toTopOf="@+id/button_DeleteIngredient" />
-
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
@@ -181,5 +146,49 @@
         android:text="@string/quantity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <TextView
+        android:id="@+id/textView_SelectToDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/describehowtodeleteItem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_Quantity">
+
+        <Button
+            android:id="@+id/button_AddIngredient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="addIngredient"
+            android:text="@string/addingredient"
+            tools:layout_editor_absoluteX="39dp"
+            tools:layout_editor_absoluteY="283dp" />
+
+        <Button
+            android:id="@+id/button_Save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="saveToDatabase"
+            android:text="@string/save"
+            tools:layout_editor_absoluteX="239dp"
+            tools:layout_editor_absoluteY="283dp" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

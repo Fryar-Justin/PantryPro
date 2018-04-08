@@ -190,6 +190,34 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         }
     }
 
+    // finds an entry in the database, I think it works...
+    public Recipe findRecipe(String search) {
+        String query = "SELECT * FROM " + TABLE_RECIPES + " WHERE " + COLUMN_RECIPENAME + " = " + "\"" + search + "\"";
+        SQLiteDatabase db = getWritableDatabase();
+
+        try {
+            // point cursor to a location in results
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
+            Recipe tempRecipe = new Recipe();
+
+            tempRecipe.setName(c.getString(c.getColumnIndex(COLUMN_RECIPENAME)));
+            tempRecipe.setDirections(c.getString(c.getColumnIndex(COLUMN_DIRECTIONS)));
+            tempRecipe.setNotes(c.getString(c.getColumnIndex(COLUMN_NOTES)));
+            tempRecipe.setIngredients(tempRecipe.parseIngredients(c.getString(c.getColumnIndex(COLUMN_INGREDIENTS))));
+
+            c.close();
+            db.close();
+
+            return tempRecipe;
+        } catch (Exception e) {
+            Log.e("MyDBHandler", e.getMessage());
+            return new Recipe();
+        }
+    }
+
+
+
     public ArrayList<String> populateArrayList(){
         ArrayList<String> stringList = new ArrayList<String>();
 

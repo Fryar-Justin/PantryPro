@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
     private static MyDBHandler mydb;
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 12;
     private static final String DATABASE_NAME = "items.db";
 
     public static final String TABLE_ITEMS     = "items";
@@ -27,8 +27,8 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     public static final String COLUMN_NOTES       = "notes";
     public static final String COLUMN_INGREDIENTS = "ingredients";
 
-    public static final String TABLE_GROCERY      = "grocery";
-    public static final String COLUMN_GROCERYNAME = "groceryname";
+    public static final String TABLE_GROCERY          = "grocery";
+    public static final String COLUMN_GROCERYNAME     = "groceryname";
     public static final String COLUMN_GROCERYQUANTITY = "groceryquantity";
 
     public static final String TABLE_MEALPLAN   = "mealplan";
@@ -37,7 +37,13 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     public static final String COLUMN_AFTERNOON = "afternoon";
     public static final String COLUMN_EVENING   = "evening";
 
-    // TODO: We need to add another table here to handle the days of the week or whatever your plan is for this
+    public static final String MONDAY    = "monday";
+    public static final String TUESDAY   = "tuesday";
+    public static final String WEDNESDAY = "wednesday";
+    public static final String THURSDAY  = "thursday";
+    public static final String FRIDAY    = "friday";
+    public static final String SATURDAY  = "saturday";
+    public static final String SUNDAY    = "sunday";
 
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -48,12 +54,25 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         String query = "CREATE TABLE " + TABLE_ITEMS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_ITEMNAME + " TEXT NOT NULL," + COLUMN_QUANTITY + " TEXT" + ");";
         String query2 = "CREATE TABLE " + TABLE_RECIPES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_RECIPENAME + " TEXT NOT NULL, " + COLUMN_DIRECTIONS + " TEXT, " + COLUMN_NOTES + " TEXT, " + COLUMN_INGREDIENTS + " TEXT" + ");";
         String query3 = "CREATE TABLE " + TABLE_GROCERY + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_GROCERYNAME + " TEXT NOT NULL, " + COLUMN_GROCERYQUANTITY + " TEXT" + ");";
-        String query4 = "CREATE TABLE " + TABLE_MEALPLAN + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_DAY + " TEXT NOT NULL, " + COLUMN_MORNING + " TEXT, " + COLUMN_AFTERNOON + " TEXT, " + COLUMN_EVENING + " TEXT" + ");";
+        String query4 = "CREATE TABLE " + TABLE_MEALPLAN + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_DAY + " TEXT, " + COLUMN_MORNING + " TEXT, " + COLUMN_AFTERNOON + " TEXT, " + COLUMN_EVENING + " TEXT" + ");";
         //execute the query
         db.execSQL(query);
         db.execSQL(query2);
         db.execSQL(query3);
         db.execSQL(query4);
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DAY, MONDAY);
+        values.put(COLUMN_DAY, TUESDAY);
+        values.put(COLUMN_DAY, WEDNESDAY);
+        values.put(COLUMN_DAY, THURSDAY);
+        values.put(COLUMN_DAY, FRIDAY);
+        values.put(COLUMN_DAY, SATURDAY);
+        values.put(COLUMN_DAY, SUNDAY);
+
+        db = getWritableDatabase();
+        db.insert(TABLE_MEALPLAN, null, values);
+        db.close();
     }
 
     @Override
@@ -97,7 +116,6 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     }
 
     public void addRecipe(Recipe recipe) {
-        // TODO: Needs to add a recipe to the database, if we have to we will create our own parsing program
         ContentValues values = new ContentValues();
         //2 paramaters. first column. second value
         values.put(COLUMN_RECIPENAME, recipe.getName());
@@ -119,12 +137,27 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         //2 paramaters. first column. second value
         values.put(COLUMN_GROCERYNAME, ingredient.getName());
         values.put(COLUMN_GROCERYQUANTITY, ingredient.getQty());
+
         //database item
         SQLiteDatabase db = getWritableDatabase();
         //purely an insert statement rather than executing a query. 3 parameters
         //name of table, optional null?, list of values or contentvalues
         db.insert(TABLE_GROCERY, null, values);
         db.close();
+    }
+
+    // TODO: Is this working?
+    public void addGroceryAssignment(String day, String time, String recipeName) {
+        ContentValues value = new ContentValues();
+
+//        value.put(time, recipeName);
+
+        SQLiteDatabase db = getWritableDatabase();
+//        db.update(TABLE_MEALPLAN, value, COLUMN_DAY + "=" + day, null);
+
+        String update = "UPDATE " + TABLE_MEALPLAN + " SET " + time + " = " + recipeName + " WHERE " + COLUMN_DAY + " = " + day;
+
+        db.execSQL(update);
     }
 
     public void updateIngredient(Ingredient newIngredient, Ingredient oldIngredient){
@@ -286,6 +319,46 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
         c.close();
         return groceryList;
+    }
+
+    public String getMealPlanTable() {
+        String query = "SELECT * FROM " + TABLE_MEALPLAN + " WHERE 1";
+        String dbString = "";
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor c = db.rawQuery(query, null);
+        //Move to the first row in your results
+        c.moveToFirst();
+        while(!c.isAfterLast()) {
+            if (c.getString(c.getColumnIndex(COLUMN_DAY)) != null) {
+                dbString += c.getString(c.getColumnIndex(COLUMN_DAY));
+                dbString += "\n";
+            }
+            c.moveToNext();
+        }
+        db.close();
+        return dbString;
+    }
+
+    public String getAssignedRecipe(String day, String time) {
+        String recipeName = "";
+        String query = "SELECT * FROM " + TABLE_MEALPLAN + " WHERE " + COLUMN_DAY + " = " + time;
+
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            Cursor c = db.rawQuery(query, null);
+
+            c.moveToFirst();
+
+            recipeName = c.getString(c.getColumnIndex(time));
+            c.close();
+        } catch (Exception e) {
+            recipeName = "No recipe assigned";
+        }
+
+        db.close();
+
+        return recipeName;
     }
 
     public boolean checkIfExists(String search){

@@ -49,7 +49,7 @@ public class GroceryListActivity extends AppCompatActivity {
 
         for (int i = 0; i < groceries.size(); i++) {
             Ingredient ing = groceries.get(i);
-            groceryNames.add(ing.getName() + ": " + ing.getQty());
+            groceryNames.add(ing.getName() + "- " + ing.getQty());
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, groceryNames);
@@ -71,7 +71,7 @@ public class GroceryListActivity extends AppCompatActivity {
                         String parsedItem = "";
 
                         for (int j = 0; j < item.length(); j++) {
-                            if (item.charAt(j) == ':') {
+                            if (item.charAt(j) == '-') {
                                 break;
                             }
                             parsedItem += item.charAt(j);

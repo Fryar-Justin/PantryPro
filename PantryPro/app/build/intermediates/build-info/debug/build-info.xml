@@ -5,45 +5,27 @@
     build-mode="COLD"
     density="420dpi"
     format="10"
-    ir-eligibility="R_CLASS_CHANGE"
+    ir-eligibility="COMPATIBLE"
     plugin-version="3.1.0"
-    timestamp="1523150747215"
+    timestamp="1523151666855"
     token="8115729202740819067"
     verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="465" />
+        duration="253" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="127" />
+        duration="29" />
     <task
         name="verifier"
-        duration="13" />
+        duration="2" />
 
     <artifact
         location="/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
-        type="SPLIT" />
-    <artifact
-        location="/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
-        type="SPLIT" />
-    <artifact
-        location="/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
-        type="SPLIT" />
-    <artifact
-        location="/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/split-apk/debug/slices/slice_6.apk"
-        type="SPLIT" />
-    <artifact
-        location="/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
-        type="SPLIT" />
-    <artifact
-        location="/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/split-apk/debug/slices/slice_7.apk"
-        type="SPLIT" />
-    <artifact
-        location="/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
         type="SPLIT" />
     <artifact
         location="/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
@@ -109,9 +91,6 @@
         timestamp="1523150747215"
         verifier="COLD_SWAP_REQUESTED" >
         <artifact
-            location="/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
-            type="SPLIT" />
-        <artifact
             location="/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
             type="SPLIT" />
         <artifact
@@ -128,6 +107,15 @@
             type="SPLIT" />
         <artifact
             location="/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
+            type="SPLIT" />
+    </build>
+    <build
+        build-mode="COLD"
+        ir-eligibility="COMPATIBLE"
+        timestamp="1523151666855"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
             type="SPLIT" />
         <artifact
             location="/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/split-apk/debug/slices/slice_1.apk"

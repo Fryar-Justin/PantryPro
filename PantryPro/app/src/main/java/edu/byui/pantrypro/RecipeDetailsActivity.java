@@ -2,7 +2,9 @@ package edu.byui.pantrypro;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +25,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
         dbHandler = new MyDBHandler(this, null, null, 1);
+
+        Button topRight = findViewById(R.id.button_TopRight);
+        topRight.setVisibility(View.INVISIBLE);
 
         Bundle extras = getIntent().getExtras();
         String name = extras.getString("NAME");

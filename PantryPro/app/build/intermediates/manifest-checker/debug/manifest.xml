@@ -38,6 +38,7 @@
         <activity android:name="edu.byui.pantrypro.RecipeInventoryActivity" />
         <activity android:name="edu.byui.pantrypro.UpdateInventoryActivity" />
         <activity android:name="edu.byui.pantrypro.AssignRecipeToDay" />
+        <activity android:name="edu.byui.pantrypro.AddGroceryItem" />
 
         <meta-data
             android:name="android.support.VERSION"

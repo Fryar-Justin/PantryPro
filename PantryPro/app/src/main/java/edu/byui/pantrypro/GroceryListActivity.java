@@ -5,23 +5,55 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class GroceryListActivity extends AppCompatActivity {
 
+    MyDBHandler dbHandler;
+    ArrayList<Ingredient> groceries;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grocery_list);
 
+        dbHandler = new MyDBHandler(this, null, null, 1);
+
         // set up the listeners and labels
         setRecipiesAndLabels();
+
+        // populate the list with the current grocery items
+        populateGroceryListView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateGroceryListView();
+    }
+
+    private void populateGroceryListView() {
+        ListView groceryList = findViewById(R.id.listView_GroceryList);
+
+        groceries = dbHandler.populateGroceryArrayList();
+        ArrayList<String> groceryNames = new ArrayList<String>();
+
+        for (int i = 0; i < groceries.size(); i++) {
+            Ingredient ing = groceries.get(i);
+            groceryNames.add(ing.getName() + ": " + ing.getQty());
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, groceryNames);
+        groceryList.setAdapter(arrayAdapter);
     }
 
     private void setRecipiesAndLabels() {
@@ -35,18 +67,30 @@ public class GroceryListActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        String food = String.valueOf(adapterView.getItemAtPosition(i));
-                        Toast.makeText(GroceryListActivity.this, food, LENGTH_SHORT).show();
+                        String item = String.valueOf(adapterView.getItemAtPosition(i));
+                        String parsedItem = "";
+
+                        for (int j = 0; j < item.length(); j++) {
+                            if (item.charAt(j) == ':') {
+                                break;
+                            }
+                            parsedItem += item.charAt(j);
+                        }
+                        Toast.makeText(GroceryListActivity.this, parsedItem + " removed", LENGTH_SHORT).show();
+                        groceries.remove(i);
+                        dbHandler.deleteGroceryItem(parsedItem);
+                        populateGroceryListView();
                     }
                 }
         );
+
 
         // set the top right button click event
         Button addButton = findViewById(R.id.button_TopRight);
         addButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Intent addInventory = new Intent(GroceryListActivity.this, AddRecipeActivity.class);
+                        Intent addInventory = new Intent(GroceryListActivity.this, AddGroceryItem.class);
                         startActivity(addInventory);
                     }
                 }

@@ -36,14 +36,6 @@ public class AddRecipeActivity extends AppCompatActivity {
 
     // save the entire recipe to the database
     public void saveToDatabase(View view) {
-//        EditText inputText = findViewById(R.id.input_Quantity);
-//
-//        Item item = new Item(inputText.getText().toString());
-//        dbHandler.addItem(item);
-//        Intent activity = new Intent(AddRecipeActivity.this, InventoryActivity.class);
-//        startActivity(activity);
-
-        // TODO: Hanson - The below code is what I'd like to implement if the database can be setup to save an entire recipe. Would it be difficult to do?
         // new implementation
         EditText recipeName = findViewById(R.id.input_Name);
         EditText recipeDirections = findViewById(R.id.input_Directions);

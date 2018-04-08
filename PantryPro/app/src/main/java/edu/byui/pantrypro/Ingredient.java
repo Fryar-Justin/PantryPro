@@ -85,8 +85,6 @@ public class Ingredient extends AppCompatActivity {
         return stringified;
     }
 
-
-
     public Ingredient parse(String stringified) {
         String parsedName = "";
         String parsedQty = "";

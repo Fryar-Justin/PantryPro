@@ -13,27 +13,29 @@ import java.util.ArrayList;
 public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
     private static MyDBHandler mydb;
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
     private static final String DATABASE_NAME = "items.db";
-    public static final String TABLE_ITEMS = "items";
-    public static final String COLUMN_ID = "_id";
+
+    public static final String TABLE_ITEMS     = "items";
+    public static final String COLUMN_ID       = "_id";
     public static final String COLUMN_ITEMNAME = "itemname";
     public static final String COLUMN_QUANTITY = "quantity";
 
-    public static final String TABLE_RECIPES = "recipe";
-    public static final String COLUMN_RECIPENAME = "recipename";
-    public static final String COLUMN_DIRECTIONS = "directions";
-    public static final String COLUMN_NOTES = "notes";
+    public static final String TABLE_RECIPES      = "recipe";
+    public static final String COLUMN_RECIPENAME  = "recipename";
+    public static final String COLUMN_DIRECTIONS  = "directions";
+    public static final String COLUMN_NOTES       = "notes";
     public static final String COLUMN_INGREDIENTS = "ingredients";
 
-    public static final String TABLE_GROCERY = "grocery";
+    public static final String TABLE_GROCERY      = "grocery";
     public static final String COLUMN_GROCERYNAME = "groceryname";
+    public static final String COLUMN_GROCERYQUANTITY = "groceryquantity";
 
-    public static final String TABLE_MEALPLAN = "mealplan";
-    public static final String COLUMN_DAY = "day";
-    public static final String COLUMN_MORNING = "morning";
+    public static final String TABLE_MEALPLAN   = "mealplan";
+    public static final String COLUMN_DAY       = "day";
+    public static final String COLUMN_MORNING   = "morning";
     public static final String COLUMN_AFTERNOON = "afternoon";
-    public static final String COLUMN_EVENING = "evening";
+    public static final String COLUMN_EVENING   = "evening";
 
     // TODO: We need to add another table here to handle the days of the week or whatever your plan is for this
 
@@ -45,7 +47,7 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_ITEMS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_ITEMNAME + " TEXT NOT NULL," + COLUMN_QUANTITY + " TEXT" + ");";
         String query2 = "CREATE TABLE " + TABLE_RECIPES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_RECIPENAME + " TEXT NOT NULL, " + COLUMN_DIRECTIONS + " TEXT, " + COLUMN_NOTES + " TEXT, " + COLUMN_INGREDIENTS + " TEXT" + ");";
-        String query3 = "CREATE TABLE " + TABLE_GROCERY + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_GROCERYNAME + " TEXT NOT NULL );";
+        String query3 = "CREATE TABLE " + TABLE_GROCERY + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_GROCERYNAME + " TEXT NOT NULL, " + COLUMN_GROCERYQUANTITY + " TEXT" + ");";
         String query4 = "CREATE TABLE " + TABLE_MEALPLAN + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_DAY + " TEXT NOT NULL, " + COLUMN_MORNING + " TEXT, " + COLUMN_AFTERNOON + " TEXT, " + COLUMN_EVENING + " TEXT" + ");";
         //execute the query
         db.execSQL(query);
@@ -110,6 +112,21 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         db.close();
     }
 
+    public void addGrocery(Ingredient ingredient) {
+        //sets different values for different columns and makes inserting easy
+
+        ContentValues values = new ContentValues();
+        //2 paramaters. first column. second value
+        values.put(COLUMN_GROCERYNAME, ingredient.getName());
+        values.put(COLUMN_GROCERYQUANTITY, ingredient.getQty());
+        //database item
+        SQLiteDatabase db = getWritableDatabase();
+        //purely an insert statement rather than executing a query. 3 parameters
+        //name of table, optional null?, list of values or contentvalues
+        db.insert(TABLE_GROCERY, null, values);
+        db.close();
+    }
+
     public void updateIngredient(Ingredient newIngredient, Ingredient oldIngredient){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("UPDATE " + TABLE_ITEMS + " SET " + COLUMN_ITEMNAME + " = \'" + newIngredient.getName() + "\', " + COLUMN_QUANTITY + " = \'" + newIngredient.getQty() + "\' WHERE " + COLUMN_ITEMNAME + "=\"" + oldIngredient.getName() + "\";");
@@ -120,6 +137,12 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     public void deleteItem(String itemName) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_ITEMS + " WHERE " + COLUMN_ITEMNAME + "=\"" + itemName + "\";");
+    }
+
+    // delete an item from the grocery table
+    public void deleteGroceryItem(String itemName) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_GROCERY + " WHERE " + COLUMN_GROCERYNAME + "=\"" + itemName + "\";");
     }
 
     // turn data into a string to be displayed
@@ -144,6 +167,7 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         db.close();
         return dbString;
     }
+
 
     // finds an entry in the database, I think it works...
     public String findEntry(String search) {
@@ -192,7 +216,6 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     public ArrayList<String> populateRecipeArrayList(){
         ArrayList<String> stringList = new ArrayList<String>();
 
-
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_RECIPES + " WHERE 1";
 
@@ -210,6 +233,31 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
         c.close();
         return stringList;
+    }
+
+    public ArrayList<Ingredient> populateGroceryArrayList(){
+        ArrayList<Ingredient> groceryList = new ArrayList<Ingredient>();
+
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_GROCERY + " WHERE 1";
+
+        //Cursor point to a location in your results
+        Cursor c = db.rawQuery(query, null);
+        //Move to the first row in your results
+        c.moveToFirst();
+
+        while(!c.isAfterLast()) {
+            if (c.getString(c.getColumnIndex(COLUMN_GROCERYNAME)) != null) {
+                String name = c.getString(c.getColumnIndex((COLUMN_GROCERYNAME)));
+                String qty = c.getString(c.getColumnIndex((COLUMN_GROCERYQUANTITY)));
+
+                groceryList.add(new Ingredient(name, qty));
+            }
+            c.moveToNext();
+        }
+
+        c.close();
+        return groceryList;
     }
 }
 

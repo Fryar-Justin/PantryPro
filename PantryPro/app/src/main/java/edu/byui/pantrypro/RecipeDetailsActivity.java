@@ -1,5 +1,6 @@
 package edu.byui.pantrypro;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -53,5 +54,21 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             strings.add(temp);
         }
         return strings;
+    }
+
+    public void addToGrocery(View view){
+        Bundle extras = getIntent().getExtras();
+        String name = extras.getString("NAME");
+        Recipe recipe = dbHandler.findRecipe(name);
+
+        ArrayList<Ingredient> ingredients = recipe.getIngredients();
+        for(int i = 0; i < ingredients.size(); i++){
+            if(!dbHandler.checkIfExists(ingredients.get(i).getName())){
+                dbHandler.addGrocery(ingredients.get(i));
+            }
+        }
+
+        Intent grocery = new Intent(RecipeDetailsActivity.this, GroceryListActivity.class);
+        startActivity(grocery);
     }
 }

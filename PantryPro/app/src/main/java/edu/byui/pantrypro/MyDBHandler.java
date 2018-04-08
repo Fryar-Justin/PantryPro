@@ -287,6 +287,20 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         c.close();
         return groceryList;
     }
+
+    public boolean checkIfExists(String search){
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_ITEMS + " WHERE " + COLUMN_ITEMNAME + " = " + "\"" + search + "\"";
+        Cursor c = db.rawQuery(query, null);
+        if(c.getCount() <= 0){
+            c.close();
+            db.close();
+            return false;
+        }
+        c.close();
+        db.close();
+        return true;
+    }
 }
 
 /*
@@ -294,35 +308,29 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     public String findEntry(String table, String column, String search, String returnColumn) {
         String query = "SELECT * FROM " + table + " WHERE " + column + " = " + "\"" + search + "\"";
         SQLiteDatabase db = getWritableDatabase();
-
         try {
             // point cursor to a location in results
             Cursor c = db.rawQuery(query, null);
             c.moveToFirst();
-
             String dbString = c.getString(c.getColumnIndex(returnColumn));
             c.close();
             db.close();
-
             return dbString;
         } catch (Exception e) {
             Log.e("MyDBHandler", e.getMessage());
             return e.getMessage();
         }
     }
-
         //Print database as a string
         public String databaseToString(){
             String dbString = "";
             //database item
             SQLiteDatabase db = getWritableDatabase();
             String query = "SELECT * FROM " + TABLE_PRODUCTS + " WHERE 1";
-
             //Cursor point to a location in your results
             Cursor c = db.rawQuery(query, null);
             //Move to the first row in your results
             c.moveToFirst();
-
             while(!c.isAfterLast()) {
                 if (c.getString(c.getColumnIndex("productname")) != null) {
                     dbString += c.getString(c.getColumnIndex("productname"));
@@ -330,11 +338,7 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
                 }
                 c.moveToNext();
             }
-
             db.close();
             return dbString;
         }
     */
-
-
-

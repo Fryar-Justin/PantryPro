@@ -60,7 +60,10 @@ public class RecipeInventoryActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String food = String.valueOf(adapterView.getItemAtPosition(i));
-                        Toast.makeText(RecipeInventoryActivity.this, food, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(RecipeInventoryActivity.this, food, Toast.LENGTH_SHORT).show();
+                        Intent recipeDetail = new Intent(RecipeInventoryActivity.this, RecipeDetailsActivity.class);
+                        recipeDetail.putExtra("NAME", food);
+                        startActivity(recipeDetail);
                     }
                 }
         );

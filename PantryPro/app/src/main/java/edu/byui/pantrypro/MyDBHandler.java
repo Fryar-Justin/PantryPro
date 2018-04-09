@@ -135,14 +135,10 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         db.close();
     }
 
-    // TODO: Is this working?
     public void addGroceryAssignment(String day, String time, String recipeName) {
         ContentValues value = new ContentValues();
 
-//        value.put(time, recipeName);
-
         SQLiteDatabase db = getWritableDatabase();
-//        db.update(TABLE_MEALPLAN, value, COLUMN_DAY + "=" + day, null);
 
         String update = "UPDATE " + TABLE_MEALPLAN + " SET " + time + " = " + recipeName + " WHERE " + COLUMN_DAY + " = " + day;
 
@@ -165,6 +161,12 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     public void deleteGroceryItem(String itemName) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_GROCERY + " WHERE " + COLUMN_GROCERYNAME + "=\"" + itemName + "\";");
+    }
+
+    // delete a recipe from the recipe table
+    public void deleteRecipe(String recipeName) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_RECIPES + " WHERE " + COLUMN_RECIPENAME + "=\"" + recipeName + "\";");
     }
 
     // turn data into a string to be displayed

@@ -27,24 +27,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_details);
         dbHandler = new MyDBHandler(this, null, null, 1);
 
-        Button topRight = findViewById(R.id.button_TopRight);
-        topRight.setVisibility(View.INVISIBLE);
-
-        Bundle extras = getIntent().getExtras();
-        String name = extras.getString("NAME");
-        Recipe recipe = dbHandler.findRecipe(name);
-
-        outputname = (TextView) findViewById(R.id.name);
-        outputdirection= (TextView) findViewById(R.id.directions);
-        outputnote= (TextView) findViewById(R.id.notes);
-        outputingredients= (ListView) findViewById(R.id.listIngredients);
-
-        outputname.setText(recipe.getName());
-        outputdirection.setText(recipe.getDirections());
-        outputnote.setText(recipe.getNotes());
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, getPrintableIngredients(recipe.getIngredients()));
-        outputingredients.setAdapter(arrayAdapter);
-
+        // set up the page
+        setListenersAndLabels();
     }
 
     public ArrayList<String> getPrintableIngredients(ArrayList<Ingredient> ingredients){
@@ -70,5 +54,38 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         Intent grocery = new Intent(RecipeDetailsActivity.this, GroceryListActivity.class);
         startActivity(grocery);
+    }
+
+    private void setListenersAndLabels() {
+
+        // setup the top right button
+        Button topRight = findViewById(R.id.button_TopRight);
+        topRight.setText("DELETE");
+        topRight.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TextView name = findViewById(R.id.name);
+                        String nameText = name.getText().toString();
+                        dbHandler.deleteRecipe(nameText);
+                        finish();
+                    }
+                }
+        );
+
+        Bundle extras = getIntent().getExtras();
+        String name = extras.getString("NAME");
+        Recipe recipe = dbHandler.findRecipe(name);
+
+        outputname = (TextView) findViewById(R.id.name);
+        outputdirection= (TextView) findViewById(R.id.directions);
+        outputnote= (TextView) findViewById(R.id.notes);
+        outputingredients= (ListView) findViewById(R.id.listIngredients);
+
+        outputname.setText(recipe.getName());
+        outputdirection.setText(recipe.getDirections());
+        outputnote.setText(recipe.getNotes());
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, getPrintableIngredients(recipe.getIngredients()));
+        outputingredients.setAdapter(arrayAdapter);
     }
 }

@@ -1,7 +1,9 @@
 package edu.byui.pantrypro;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,8 +14,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Type;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,22 +33,40 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class MealPlanActivity extends AppCompatActivity{
     ListView inputDate;
     MyDBHandler dbHandler;
+    ArrayList<String> week;
+    SharedPreferences prefs;
+    public SharedPreferences.Editor preferenceEditor;
+    private static final int PREFERENCE_MODE_PRIVATE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        preferenceEditor = prefs.edit();
         inputDate = (ListView) findViewById(R.id.datetext);
 
         // set the listeners and labels
-        setRecipiesAndLabels();
+
 
         dbHandler = new MyDBHandler(this, null, null, 1);
 
-
-        ArrayList<String> days = populateDays();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, days );
+        String test = prefs.getString("weekPlan", null);
+        if (test == null) {
+            test = "uninitialized";
+        }
+        if(test == "uninitialized"){
+            week = populateDays();
+            preferenceEditor.putString("weekPlan", stringifyArray(week));
+            preferenceEditor.apply();
+        }
+        else{
+           week = deStringifyArray(test);
+        }
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, week );
         inputDate.setAdapter(arrayAdapter);
+
+        setRecipiesAndLabels();
     }
 
     public ArrayList<String> populateDays(){
@@ -68,6 +92,20 @@ public class MealPlanActivity extends AppCompatActivity{
                !selection.equals("Sunday");
     }
 
+    public String stringifyArray(ArrayList<String> items){
+        Gson gson = new Gson();
+        String itemString = gson.toJson(items);
+        return itemString;
+    }
+
+    public ArrayList<String> deStringifyArray(String outputarray) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+
+        ArrayList<String> finalOutputString = gson.fromJson(outputarray, type);
+        return finalOutputString;
+    }
+
     private void setRecipiesAndLabels() {
         // set the label
         TextView activityLabel = findViewById(R.id.textView_MenuLabel);
@@ -79,13 +117,17 @@ public class MealPlanActivity extends AppCompatActivity{
                 new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String selection = String.valueOf(adapterView.getItemAtPosition(i));
+
                         if (isSelectionValid(selection)) {
                             Intent assignToDay = new Intent(MealPlanActivity.this, AssignRecipeToDay.class);
                             assignToDay.putExtra("day", selection);
+                            assignToDay.putExtra("position", i);
+                            assignToDay.putExtra("weekString", stringifyArray(week));
                             startActivity(assignToDay);
                         }
                         else {
                             Toast.makeText(MealPlanActivity.this, "Don't pick those!", LENGTH_SHORT).show();
+
                         }
                     }
                 }

@@ -61,18 +61,7 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         db.execSQL(query3);
         db.execSQL(query4);
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_DAY, MONDAY);
-        values.put(COLUMN_DAY, TUESDAY);
-        values.put(COLUMN_DAY, WEDNESDAY);
-        values.put(COLUMN_DAY, THURSDAY);
-        values.put(COLUMN_DAY, FRIDAY);
-        values.put(COLUMN_DAY, SATURDAY);
-        values.put(COLUMN_DAY, SUNDAY);
-
-        db = getWritableDatabase();
-        db.insert(TABLE_MEALPLAN, null, values);
-        db.close();
+        seedMealPlan(db);
     }
 
     @Override
@@ -342,7 +331,7 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
     public String getAssignedRecipe(String day, String time) {
         String recipeName = "";
-        String query = "SELECT * FROM " + TABLE_MEALPLAN + " WHERE " + COLUMN_DAY + " = " + time;
+        String query = "SELECT * FROM " + TABLE_MEALPLAN + " WHERE " + COLUMN_DAY + " = \"" + time + "\"";
 
         SQLiteDatabase db = getWritableDatabase();
         try {
@@ -373,6 +362,52 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         c.close();
         db.close();
         return true;
+    }
+
+    public void seedMealPlan(SQLiteDatabase db){
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DAY, MONDAY);
+        values.put(COLUMN_MORNING, "Monday Breakfast");
+        values.put(COLUMN_AFTERNOON, "Monday Lunch");
+        values.put(COLUMN_EVENING, "Monday Dinner");
+        db.insert(TABLE_MEALPLAN, null, values);
+
+        values.put(COLUMN_DAY, TUESDAY);
+        values.put(COLUMN_MORNING, "Tuesday Breakfast");
+        values.put(COLUMN_AFTERNOON, "Tuesday Lunch");
+        values.put(COLUMN_EVENING, "Tuesday Dinner");
+        db.insert(TABLE_MEALPLAN, null, values);
+
+        values.put(COLUMN_DAY, WEDNESDAY);
+        values.put(COLUMN_MORNING, "Wednesday Breakfast");
+        values.put(COLUMN_AFTERNOON, "Wednesday Lunch");
+        values.put(COLUMN_EVENING, "Wednesday Dinner");
+        db.insert(TABLE_MEALPLAN, null, values);
+
+        values.put(COLUMN_DAY, THURSDAY);
+        values.put(COLUMN_MORNING, "Thursday Breakfast");
+        values.put(COLUMN_AFTERNOON, "Thursday Lunch");
+        values.put(COLUMN_EVENING, "Thursday Dinner");
+        db.insert(TABLE_MEALPLAN, null, values);
+
+        values.put(COLUMN_DAY, FRIDAY);
+        values.put(COLUMN_MORNING, "Friday Breakfast");
+        values.put(COLUMN_AFTERNOON, "Friday Lunch");
+        values.put(COLUMN_EVENING, "Friday Dinner");
+        db.insert(TABLE_MEALPLAN, null, values);
+
+        values.put(COLUMN_DAY, SATURDAY);
+        values.put(COLUMN_MORNING, "Saturday Breakfast");
+        values.put(COLUMN_AFTERNOON, "Saturday Lunch");
+        values.put(COLUMN_EVENING, "Saturday Dinner");
+        db.insert(TABLE_MEALPLAN, null, values);
+
+        values.put(COLUMN_DAY, SUNDAY);
+        values.put(COLUMN_MORNING, "Sunday Breakfast");
+        values.put(COLUMN_AFTERNOON, "Sunday Lunch");
+        values.put(COLUMN_EVENING, "Sunday Dinner");
+        db.insert(TABLE_MEALPLAN, null, values);
+
     }
 }
 

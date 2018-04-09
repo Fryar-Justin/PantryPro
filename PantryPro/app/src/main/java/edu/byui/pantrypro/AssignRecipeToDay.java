@@ -1,6 +1,8 @@
 package edu.byui.pantrypro;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static android.widget.Toast.LENGTH_LONG;
@@ -24,28 +30,38 @@ public class AssignRecipeToDay extends AppCompatActivity {
     ListView recipeList;
     String day = "";
     String time = "";
+    Bundle extras;
+    String weekPlanString;
+    ArrayList<String> weekPlanArray;
+    SharedPreferences prefs;
+    public SharedPreferences.Editor preferenceEditor;
 
-    public static final String COLUMN_DAY       = "day";
-    public static final String COLUMN_MORNING   = "morning";
+    public static final String COLUMN_DAY = "day";
+    public static final String COLUMN_MORNING = "morning";
     public static final String COLUMN_AFTERNOON = "afternoon";
-    public static final String COLUMN_EVENING   = "evening";
+    public static final String COLUMN_EVENING = "evening";
 
-    public static final String MONDAY    = "monday";
-    public static final String TUESDAY   = "tuesday";
+    public static final String MONDAY = "monday";
+    public static final String TUESDAY = "tuesday";
     public static final String WEDNESDAY = "wednesday";
-    public static final String THURSDAY  = "thursday";
-    public static final String FRIDAY    = "friday";
-    public static final String SATURDAY  = "saturday";
-    public static final String SUNDAY    = "sunday";
+    public static final String THURSDAY = "thursday";
+    public static final String FRIDAY = "friday";
+    public static final String SATURDAY = "saturday";
+    public static final String SUNDAY = "sunday";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assign_recipe_to_day);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         dailyMealPlan = new DailyMealPlan();
         dbHandler = new MyDBHandler(this, null, null, 1);
         recipeList = findViewById(R.id.listview_Recipes);
-
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        preferenceEditor = prefs.edit();
+        weekPlanString = prefs.getString("weekPlan", null);
+        weekPlanArray = new ArrayList<>();
+        extras = getIntent().getExtras();
         // setup stuff
         setListenersAndLabels();
     }
@@ -76,19 +92,19 @@ public class AssignRecipeToDay extends AppCompatActivity {
 
         if (time.equals("Breakfast")) {
             time = COLUMN_MORNING;
-        }
-        else if (time.equals("Lunch")) {
+        } else if (time.equals("Lunch")) {
             time = COLUMN_AFTERNOON;
-        }
-        else if (time.equals("Dinner")) {
+        } else if (time.equals("Dinner")) {
             time = COLUMN_EVENING;
         }
 
         Toast.makeText(AssignRecipeToDay.this, time, Toast.LENGTH_SHORT).show();
 
         // set the currently assigned recipe
+
         TextView currentRecipe = findViewById(R.id.textView_CurrentRecipe);
-        currentRecipe.setText(getCurrentRecipe(day, time));
+
+        currentRecipe.setText(extras.getString("day"));
 
         // set the onclick event for list items
         ListView daysList = findViewById(R.id.listview_Recipes);
@@ -97,7 +113,12 @@ public class AssignRecipeToDay extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String recipeName = String.valueOf(adapterView.getItemAtPosition(i));
-                        setRecipeToDay(recipeName);
+                        weekPlanArray = deStringifyArray(weekPlanString);
+                        weekPlanArray.set(extras.getInt("position"), "    " + recipeName);
+                        preferenceEditor.putString("weekPlan", stringifyArray(weekPlanArray));
+                        preferenceEditor.apply();
+                        Intent mealPlan = new Intent(AssignRecipeToDay.this, MealPlanActivity.class);
+                        startActivity(mealPlan);
                     }
                 }
         );
@@ -113,7 +134,7 @@ public class AssignRecipeToDay extends AppCompatActivity {
 
     private void populateRecipes() {
         ArrayList<String> stringList = dbHandler.populateRecipeArrayList();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, stringList );
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stringList);
         recipeList.setAdapter(arrayAdapter);
     }
 
@@ -127,17 +148,35 @@ public class AssignRecipeToDay extends AppCompatActivity {
         Toast.makeText(AssignRecipeToDay.this, "Boom! It's done!", Toast.LENGTH_SHORT).show();
     }
 
-    private String getCurrentRecipe(String day, String time) {
-        return dbHandler.getMealPlanTable();
+
+    public String stringifyArray(ArrayList<String> items){
+        Gson gson = new Gson();
+        String itemString = gson.toJson(items);
+        return itemString;
+    }
+
+    public ArrayList<String> deStringifyArray(String outputarray) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+
+        ArrayList<String> finalOutputString = gson.fromJson(outputarray, type);
+        return finalOutputString;
+    }
+}
+/*    private String getCurrentRecipe() {
+
 ////        // TODO: Needs to get the current recipe from the db that is assigned to this particular day
-//        String recipeName = dbHandler.getAssignedRecipe(day, time);
-//
+
+        String recipeName = extras.getString("day");
+
+
 //        if (recipeName == null || recipeName.equals("")) {
 //            return "Not yet assigned";
 //        }
 //        else {
 //            return recipeName;
 //        }
+        return recipeName;
     }
 }
 
@@ -168,3 +207,4 @@ public class AssignRecipeToDay extends AppCompatActivity {
 //        }
 //        viewer.setText(outThis);
 //    }
+*/

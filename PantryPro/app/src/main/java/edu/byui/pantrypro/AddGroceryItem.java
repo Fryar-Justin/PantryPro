@@ -11,6 +11,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class AddGroceryItem extends AppCompatActivity {
@@ -40,8 +42,13 @@ public class AddGroceryItem extends AppCompatActivity {
             Toast.makeText(AddGroceryItem.this, "Enter both Name & Qty!", LENGTH_SHORT).show();
         }
         else {
-            dbHandler.addGrocery(new Ingredient(name, qty));
-            finish();
+            if (dbHandler.checkIfExists(name)) {
+                Toast.makeText(AddGroceryItem.this, "Item is already in inventory!", LENGTH_SHORT).show();
+            }
+            else {
+                dbHandler.addGrocery(new Ingredient(name, qty));
+                finish();
+            }
         }
     }
 

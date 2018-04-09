@@ -76,7 +76,7 @@ public class GroceryListActivity extends AppCompatActivity {
                             }
                             parsedItem += item.charAt(j);
                         }
-                        Toast.makeText(GroceryListActivity.this, parsedItem + " removed", LENGTH_SHORT).show();
+                        Toast.makeText(GroceryListActivity.this, parsedItem + " added to inventory", LENGTH_SHORT).show();
                         groceries.remove(i);
 
                         Ingredient toInventory = dbHandler.getGroceryItemDetails(parsedItem);

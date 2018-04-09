@@ -78,6 +78,10 @@ public class GroceryListActivity extends AppCompatActivity {
                         }
                         Toast.makeText(GroceryListActivity.this, parsedItem + " removed", LENGTH_SHORT).show();
                         groceries.remove(i);
+
+                        Ingredient toInventory = dbHandler.getGroceryItemDetails(parsedItem);
+                        dbHandler.addIngredient(toInventory);
+
                         dbHandler.deleteGroceryItem(parsedItem);
                         populateGroceryListView();
                     }

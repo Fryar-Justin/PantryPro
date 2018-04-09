@@ -331,6 +331,27 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         return dbString;
     }
 
+    public Ingredient getGroceryItemDetails(String name) {
+        String itemName = "";
+        String itemQty = "";
+
+        String query = "SELECT * FROM " + TABLE_GROCERY + " WHERE " + COLUMN_GROCERYNAME + " = \"" + name +  "\"";
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            Cursor c = db.rawQuery(query, null);
+            c.moveToFirst();
+            itemName = c.getString(c.getColumnIndex(COLUMN_GROCERYNAME));
+            itemQty = c.getString(c.getColumnIndex(COLUMN_GROCERYQUANTITY));
+
+            c.close();
+        } catch (Exception e) {
+            Log.e("MyDBHandler:getGroceryItemDetails(String)", e.getMessage());
+        }
+        db.close();
+
+        return new Ingredient(itemName, itemQty);
+    }
+
     public String getAssignedRecipe(String day, String time) {
         String recipeName = "";
         String query = "SELECT * FROM " + TABLE_MEALPLAN + " WHERE " + COLUMN_DAY + " = \"" + time + "\"";

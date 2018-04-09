@@ -3,6 +3,7 @@ package edu.byui.pantrypro;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +21,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     TextView outputdirection;
     TextView outputnote;
     ListView outputingredients;
+    Recipe recipe;
+    String newRecipeName;
     MyDBHandler dbHandler;
 
     @Override
@@ -27,9 +30,35 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
         dbHandler = new MyDBHandler(this, null, null, 1);
+        Bundle extras = getIntent().getExtras();
+        String name = extras.getString("NAME");
+        recipe = dbHandler.findRecipe(name);
+        newRecipeName = recipe.getName();
 
         // set up the page
         setListenersAndLabels();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        recipe.setName(newRecipeName);
+        recipe = dbHandler.findRecipe(recipe.getName());
+
+        outputname.setText(recipe.getName());
+        outputdirection.setText(recipe.getDirections());
+        outputnote.setText(recipe.getNotes());
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, getPrintableIngredients(recipe.getIngredients()));
+        outputingredients.setAdapter(arrayAdapter);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                newRecipeName = data.getStringExtra("newRecipeName");
+            }
+        }
     }
 
     public ArrayList<String> getPrintableIngredients(ArrayList<Ingredient> ingredients){
@@ -89,9 +118,19 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 }
         );
 
-        Bundle extras = getIntent().getExtras();
-        String name = extras.getString("NAME");
-        Recipe recipe = dbHandler.findRecipe(name);
+        Button topLeft = findViewById(R.id.button_TopLeft);
+        topLeft.setVisibility(View.VISIBLE);
+        topLeft.setText("Modify");
+        topLeft.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent modifyRecipeIntent = new Intent(RecipeDetailsActivity.this, EditRecipeActivity.class);
+                        modifyRecipeIntent.putExtra("recipeName", outputname.getText().toString());
+                        startActivityForResult(modifyRecipeIntent, 1);
+                    }
+                }
+        );
 
         outputname = (TextView) findViewById(R.id.name);
         outputdirection= (TextView) findViewById(R.id.directions);

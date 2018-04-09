@@ -81,6 +81,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="14sp"
+        android:nextFocusForward="@id/input_Directions"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView7" />
@@ -94,6 +95,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="14sp"
+        android:nextFocusForward="@id/input_Notes"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView8" />
@@ -107,6 +109,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="14sp"
+        android:nextFocusForward="@id/input_Ingredient"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView10" />
@@ -120,6 +123,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="14sp"
+        android:nextFocusForward="@id/input_Quantity"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView12" />

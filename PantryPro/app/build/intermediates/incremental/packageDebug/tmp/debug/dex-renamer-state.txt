@@ -1,7 +1,4 @@
-#Mon Apr 09 07:43:10 MDT 2018
-base.0=/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/transforms/dexMerger/debug/57
-path.1=classes.dex
-renamed.1=classes2.dex
+#Tue Apr 10 13:45:54 PDT 2018
+base.0=C\:\\Users\\User\\Desktop\\spring 2018\\PantryPro\\PantryPro\\PantryPro\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
 renamed.0=classes.dex
-base.1=/Users/blvd/Desktop/PantryPro/PantryPro/app/build/intermediates/transforms/dexMerger/debug/56

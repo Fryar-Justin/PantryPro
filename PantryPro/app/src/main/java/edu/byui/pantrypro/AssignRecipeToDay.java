@@ -98,7 +98,7 @@ public class AssignRecipeToDay extends AppCompatActivity {
             time = COLUMN_EVENING;
         }
 
-        Toast.makeText(AssignRecipeToDay.this, time, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(AssignRecipeToDay.this, time, Toast.LENGTH_SHORT).show();
 
         // set the currently assigned recipe
 

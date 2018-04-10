@@ -92,6 +92,33 @@ public class MealPlanActivity extends AppCompatActivity{
                !selection.equals("Sunday");
     }
 
+    private boolean isSelectionNotDefault(String selection) {
+        return  isSelectionValid(selection)    &&
+                !selection.equals("    Monday Breakfast")    &&
+                !selection.equals("    Monday Lunch")    &&
+                !selection.equals("    Monday Dinner")    &&
+                !selection.equals("    Tuesday Breakfast")   &&
+                !selection.equals("    Tuesday Lunch")   &&
+                !selection.equals("    Tuesday Dinner")   &&
+                !selection.equals("    Wednesday Breakfast") &&
+                !selection.equals("    Wednesday Lunch") &&
+                !selection.equals("    Wednesday Dinner") &&
+                !selection.equals("    Thursday Breakfast")  &&
+                !selection.equals("    Thursday Lunch")  &&
+                !selection.equals("    Thursday Dinner")  &&
+                !selection.equals("    Friday Breakfast")    &&
+                !selection.equals("    Friday Lunch")    &&
+                !selection.equals("    Friday Dinner")    &&
+                !selection.equals("    Saturday Breakfast")  &&
+                !selection.equals("    Saturday Lunch")  &&
+                !selection.equals("    Saturday Dinner")  &&
+                !selection.equals("    Sunday Breakfast")    &&
+                !selection.equals("    Sunday Lunch")    &&
+                !selection.equals("    Sunday Dinner");
+    }
+
+
+
     public String stringifyArray(ArrayList<String> items){
         Gson gson = new Gson();
         String itemString = gson.toJson(items);
@@ -136,22 +163,35 @@ public class MealPlanActivity extends AppCompatActivity{
         // set the top right button click event
         Button addButton = findViewById(R.id.button_TopRight);
         // we don't want to see the button here so make it invisible
-        addButton.setVisibility(View.INVISIBLE);
+        addButton.setVisibility(View.VISIBLE);
+        addButton.setText("ADD TO GROCERY");
         addButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Intent addInventory = new Intent(MealPlanActivity.this, AddRecipeActivity.class);
-                        startActivity(addInventory);
+                        for(int i = 0; i < week.size(); i++){
+                            if(isSelectionNotDefault(week.get(i))){
+                                addToGrocery(week.get(i));
+                            }
+                        }
+                        Intent grocery = new Intent(MealPlanActivity.this, GroceryListActivity.class);
+                        startActivity(grocery);
                     }
                 }
         );
 
         // set the top left button click event
         Button backButton = findViewById(R.id.button_TopLeft);
+        backButton.setVisibility(View.VISIBLE);
+        backButton.setText("CLEAR LIST");
         backButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        finish();
+                        week = populateDays();
+                        preferenceEditor.putString("weekPlan", stringifyArray(week));
+                        preferenceEditor.apply();
+
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MealPlanActivity.this,android.R.layout.simple_list_item_1, week );
+                        inputDate.setAdapter(arrayAdapter);
                     }
                 }
         );
@@ -198,5 +238,16 @@ public class MealPlanActivity extends AppCompatActivity{
                 }
         );
 
+    }
+
+    public void addToGrocery(String name){
+        Recipe recipe = dbHandler.findRecipe(name.substring(4));
+
+        ArrayList<Ingredient> ingredients = recipe.getIngredients();
+        for(int i = 0; i < ingredients.size(); i++){
+            if(!dbHandler.checkIfExists(ingredients.get(i).getName())){
+                dbHandler.addGrocery(ingredients.get(i));
+            }
+        }
     }
 }

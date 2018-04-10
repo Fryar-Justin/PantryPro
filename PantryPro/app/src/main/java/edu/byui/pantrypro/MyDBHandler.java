@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
     private static MyDBHandler mydb;
-    private static final int DATABASE_VERSION = 24;
+    private static final int DATABASE_VERSION = 27;
     private static final String DATABASE_NAME = "items.db";
 
     public static final String TABLE_ITEMS     = "items";

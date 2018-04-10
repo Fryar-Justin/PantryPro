@@ -30,7 +30,8 @@
         <activity android:name=".RecipeInventoryActivity" />
         <activity android:name=".UpdateInventoryActivity" />
         <activity android:name=".AssignRecipeToDay" />
-        <activity android:name=".AddGroceryItem"></activity>
+        <activity android:name=".AddGroceryItem" />
+        <activity android:name=".EditRecipeActivity"></activity>
     </application>
 
 </manifest>

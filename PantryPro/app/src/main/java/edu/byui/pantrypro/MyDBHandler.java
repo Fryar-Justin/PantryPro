@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
     private static MyDBHandler mydb;
-    private static final int DATABASE_VERSION = 27;
+    private static final int DATABASE_VERSION = 28;
     private static final String DATABASE_NAME = "items.db";
 
     public static final String TABLE_ITEMS     = "items";
@@ -160,14 +160,29 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
                 addIngredient(ingredients.get(i));
             }
 
-//            Log.e("PopulateDB", recipes.get(1).getIngredients().get(0).getName());
-//            Log.e("PopulateDB", recipes.get(2).getIngredients().get(0).getName());
-//            Log.e("PopulateDB", recipes.get(3).getIngredients().get(0).getName());
-//            Log.e("PopulateDB", recipes.get(4).getIngredients().get(0).getName());
-//            Log.e("PopulateDB", recipes.get(5).getIngredients().get(0).getName());
-//            Log.e("PopulateDB", recipes.get(6).getIngredients().get(0).getName());
-//            Log.e("PopulateDB", recipes.get(7).getIngredients().get(0).getName());
-//            Log.e("PopulateDB", recipes.get(8).getIngredients().get(0).getName());
+            Ingredient ing1 = new Ingredient("Noodles", "16 ounces");
+            Ingredient ing2 = new Ingredient("Garlic", "1 container");
+            Ingredient ing3 = new Ingredient("Cheese Sauce", "16 ounces");
+            Ingredient ing4 = new Ingredient("Garlic Bread", "1 loaf");
+            Ingredient ing5 = new Ingredient("Garlic Salt", "1 container");
+
+            ArrayList<Ingredient> ings = new ArrayList<Ingredient>();
+            ings.add(ing1); ings.add(ing2); ings.add(ing3); ings.add(ing4); ings.add(ing5);
+
+            Recipe rec = new Recipe("Spaghetti", "Boil the noodles until they are soft, cook bread", "Garlic bread burns quickly so watch it!", ings);
+            addRecipe(rec);
+
+            ing1 = new Ingredient("Beef", "2 lbs");
+            ing2 = new Ingredient("Flower", "5 lbs");
+            ing3 = new Ingredient("Milk", "1 Gallon");
+            ing4 = new Ingredient("Hard Taco Shells", "24 count");
+            ing5 = new Ingredient("Taco Seasoning", "1 package");
+
+            ings = new ArrayList<Ingredient>();
+            ings.add(ing1); ings.add(ing2); ings.add(ing3); ings.add(ing4); ings.add(ing5);
+
+            rec = new Recipe("Tacos", "Brown the beef and mix with the taco seasoning", "The water will boil off over time and it will thicken", ings);
+            addRecipe(rec);
 
             databasePopulated = true;
         }

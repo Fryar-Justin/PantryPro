@@ -2,6 +2,7 @@ package edu.byui.pantrypro;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ public class InventoryActivity extends AppCompatActivity {
     ListView shoppingList;
     MyDBHandler dbHandler;
     Intent shareButtonIntent;
+    public static boolean databaseFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class InventoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inventory);
         shoppingList = (ListView) findViewById(R.id.shoppingList);
         dbHandler = new MyDBHandler(this, null, null, 1);
+        dbHandler.populateInventoryAndRecipes();
 
         // set the listeners and labels for everything
         setListenersAndLabels();

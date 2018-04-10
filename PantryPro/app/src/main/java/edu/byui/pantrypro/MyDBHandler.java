@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
 
     private static MyDBHandler mydb;
-    private static final int DATABASE_VERSION = 12;
+    private static final int DATABASE_VERSION = 24;
     private static final String DATABASE_NAME = "items.db";
 
     public static final String TABLE_ITEMS     = "items";
@@ -44,6 +44,7 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
     public static final String FRIDAY    = "friday";
     public static final String SATURDAY  = "saturday";
     public static final String SUNDAY    = "sunday";
+    public static boolean databasePopulated = false;
 
     public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -70,7 +71,106 @@ public class MyDBHandler extends SQLiteOpenHelper implements Serializable{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROCERY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEALPLAN);
+
+
         onCreate(db);
+    }
+
+    public void populateInventoryAndRecipes() {
+        if (!databasePopulated) {
+            int size = 9;
+            String recNames[] = {"Cereal", "Chili", "Pancakes", "Toast", "Lollipops", "Trail Mix", "Bread", "Waffles", "French Toast"};
+            String recDirections[] = {"Put the Cheerios in the bowl and add milk", "Add beef and beans to a crockpot, cook for 6 hours", "Cook the batter and add syrup",
+                    "Make bread and put it in the toaster", "Add sugar to a stick and lick", "Combine cereal and lots of goodies", "Put flower in a bread machine and make",
+                    "Use a waffle iron, clothes irons don't work", "French toast can be made in the U.S."
+            };
+            String recNotes[] = {"Don't burn the cereal!", "Chili can sometimes be hot!", "They are circular", "Don't make them black, just crispy",
+                    "I like the red kind", "I like the honey roasted", "Good Hawaiian bread", "The checkers are my favorite", "They burn easily!"
+            };
+            //                      0           1       2          3        4         5        6          7          8
+            String ingNames[] = {"Cheerios", "Milk", "Flower", "Yeast", "Butter", "Syrup", "Sugar", "Corn Syrup", "Beef"};
+            String ingQty[] = {"1 Box", "1 Gallon", "5 lbs", "1 Tablespoon", "12 Ounces", "1 Bottle", "5 lbs", "5 Quarts", "2 lbs"};
+
+            ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+            ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+
+            for (int i = 0; i < size; i++) {
+                ingredients.add(new Ingredient(ingNames[i], ingQty[i]));
+            }
+            for (int i = 0; i < size; i++) {
+                recipes.add(new Recipe(recNames[i], recDirections[i], recNotes[i]));
+            }
+
+            ArrayList<Ingredient> toAdd = new ArrayList<Ingredient>();
+
+            // cereal
+            toAdd.add(ingredients.get(0));
+            toAdd.add(ingredients.get(1));
+            recipes.get(0).setIngredients(toAdd);
+            toAdd = new ArrayList<>();
+            // chili
+            toAdd.add(ingredients.get(4));
+            toAdd.add(ingredients.get(6));
+            toAdd.add(ingredients.get(8));
+            recipes.get(1).setIngredients(toAdd);
+            toAdd = new ArrayList<>();
+            // pancakes
+            toAdd.add(ingredients.get(0));
+            toAdd.add(ingredients.get(1));
+            recipes.get(2).setIngredients(toAdd);
+            toAdd = new ArrayList<>();
+            // toast
+            toAdd.add(ingredients.get(2));
+            toAdd.add(ingredients.get(5));
+            toAdd.add(ingredients.get(6));
+            recipes.get(3).setIngredients(toAdd);
+            toAdd = new ArrayList<>();
+            // lolli pops
+            toAdd.add(ingredients.get(6));
+            toAdd.add(ingredients.get(7));
+            recipes.get(4).setIngredients(toAdd);
+            toAdd = new ArrayList<>();
+            // trail mix
+            toAdd.add(ingredients.get(0));
+            toAdd.add(ingredients.get(4));
+            recipes.get(5).setIngredients(toAdd);
+            toAdd = new ArrayList<>();
+            // bread
+            toAdd.add(ingredients.get(3));
+            recipes.get(6).setIngredients(toAdd);
+            toAdd = new ArrayList<>();
+            // waffles
+            toAdd.add(ingredients.get(1));
+            toAdd.add(ingredients.get(2));
+            toAdd.add(ingredients.get(4));
+            toAdd.add(ingredients.get(5));
+            recipes.get(7).setIngredients(toAdd);
+            toAdd = new ArrayList<>();
+            // french toast
+            toAdd.add(ingredients.get(1));
+            toAdd.add(ingredients.get(2));
+            toAdd.add(ingredients.get(3));
+            recipes.get(8).setIngredients(toAdd);
+            toAdd = new ArrayList<>();
+
+            for (int i = 0; i < recipes.size(); i++) {
+                addRecipe(recipes.get(i));
+            }
+            for (int i = 0; i < ingredients.size(); i++) {
+                addIngredient(ingredients.get(i));
+            }
+
+//            Log.e("PopulateDB", recipes.get(1).getIngredients().get(0).getName());
+//            Log.e("PopulateDB", recipes.get(2).getIngredients().get(0).getName());
+//            Log.e("PopulateDB", recipes.get(3).getIngredients().get(0).getName());
+//            Log.e("PopulateDB", recipes.get(4).getIngredients().get(0).getName());
+//            Log.e("PopulateDB", recipes.get(5).getIngredients().get(0).getName());
+//            Log.e("PopulateDB", recipes.get(6).getIngredients().get(0).getName());
+//            Log.e("PopulateDB", recipes.get(7).getIngredients().get(0).getName());
+//            Log.e("PopulateDB", recipes.get(8).getIngredients().get(0).getName());
+
+            databasePopulated = true;
+        }
     }
 
     //product is the class that will be stored
